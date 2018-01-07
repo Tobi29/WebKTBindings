@@ -7,6 +7,12 @@ MDN are likely to show here (if any).
 
 # Modules
 
+## WebAudio
+Provides access to the
+[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
+
+Incomplete as of yet, but most of the Web IDL of the specification is available.
+
 ## WebGL2
 Provides access to the
 [WebGL API](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API),
