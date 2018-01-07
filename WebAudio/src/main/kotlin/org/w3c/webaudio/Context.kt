@@ -16,6 +16,7 @@
 
 package org.w3c.webaudio
 
+import org.khronos.webgl.ArrayBuffer
 import org.w3c.dom.HTMLMediaElement
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
@@ -121,6 +122,10 @@ external abstract class BaseAudioContext : EventTarget {
     fun createBuffer(numberOfChannels: Int,
                      length: Int,
                      sampleRate: Double): AudioBuffer
+
+    fun decodeAudioData(audioData: ArrayBuffer,
+                        successCallback: (AudioBuffer) -> dynamic = definedExternally,
+                        errorCallback: () -> dynamic = definedExternally): Promise<AudioBuffer>
 
     fun createBufferSource(): AudioBufferSourceNode
     fun createConstantSource(): ConstantSourceNode
