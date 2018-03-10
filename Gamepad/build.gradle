@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
-include "Gamepad"
-include "WebAudio"
-include "WebGL2"
+apply from: "$rootDir/resources/modulekotlinjs.gradle"
+
+dependencies {
+    compile rootProject.ext.kotlinSTDJS
+}
