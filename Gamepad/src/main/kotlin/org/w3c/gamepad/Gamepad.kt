@@ -17,10 +17,7 @@
 package org.w3c.gamepad
 
 import org.khronos.webgl.Float32Array
-import org.w3c.dom.Navigator
-import org.w3c.dom.Window
 import org.w3c.dom.events.Event
-import kotlin.browser.window
 import kotlin.js.Promise
 
 /**
@@ -86,50 +83,3 @@ typealias GamepadHand = String
  * GamepadHapticActuatorType enum, might be `"vibration"`
  */
 typealias GamepadHapticActuatorType = String
-
-inline fun Navigator.getGamepads(): Array<Gamepad?>? =
-    @Suppress("UnsafeCastFromDynamic")
-    compatMode(
-        standard = { asDynamic().getGamepads() },
-        webkit = { asDynamic().webkitGetGamepads() },
-        unknown = { null }
-    )
-
-inline val eventGamepadconnected: String?
-    get() = compatMode(
-        standard = { "gamepadconnected" },
-        webkit = { "webkitgamepadconnected" },
-        unknown = { null }
-    )
-
-inline val eventGamepaddisconnected: String?
-    get() = compatMode(
-        standard = { "gamepaddisconnected" },
-        webkit = { "webkitgamepaddisconnected" },
-        unknown = { null }
-    )
-
-inline var Window.ongamepadconnected: ((GamepadEvent) -> dynamic)?
-    @Suppress("UnsafeCastFromDynamic")
-    get() = asDynamic().ongamepadconnected
-    set(value) {
-        asDynamic().ongamepadconnected = value
-    }
-
-inline var Window.ongamepaddisconnected: ((GamepadEvent) -> dynamic)?
-    @Suppress("UnsafeCastFromDynamic")
-    get() = asDynamic().ongamepaddisconnected
-    set(value) {
-        asDynamic().ongamepaddisconnected = value
-    }
-
-@PublishedApi
-internal inline fun <R> compatMode(
-    standard: () -> R,
-    webkit: () -> R,
-    unknown: () -> R
-) = when {
-    window.asDynamic().GamepadEvent != undefined -> standard()
-    window.asDynamic().WebKitGamepadEvent != undefined -> webkit()
-    else -> unknown()
-}
