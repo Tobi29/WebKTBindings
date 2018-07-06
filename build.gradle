@@ -38,6 +38,5 @@ allprojects {
 
 ext {
     kotlinVersion = "1.2.51"
-
-    kotlinSTDJS = "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion"
+    kotlinJS = { module -> "org.jetbrains.kotlin:$module-js:$kotlinVersion" }
 }
