@@ -28,7 +28,7 @@ bintray {
         licenses = ["Apache-2.0"]
         websiteUrl = "https://github.com/Tobi29/WebKTBindings"
         issueTrackerUrl = "https://github.com/Tobi29/WebKTBindings/issues"
-        githubRepo = "https://github.com/Tobi29/WebKTBindings"
+        githubRepo = "Tobi29/WebKTBindings"
         vcsUrl = "https://github.com/Tobi29/WebKTBindings.git"
         version {
             name = project.version
