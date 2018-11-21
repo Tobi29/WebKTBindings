@@ -48,3 +48,5 @@ bintray {
                 .findAll { it != "kotlinMultiplatform" }
     }
 }
+
+tasks.findByName("publish")?.dependsOn("bintrayUpload")
