@@ -5,6 +5,10 @@ Type information was mostly taken from [MDN](https://developer.mozilla.org)
 with occasional checks into the specifications from W3C. Mistakes from
 MDN are likely to show here (if any).
 
+# Artifacts
+Compiled maven artifacts can be found on
+[Bintray](https://bintray.com/gitout/scapes-engine/web-kt-bindings).
+
 # Modules
 
 ## Gamepad
