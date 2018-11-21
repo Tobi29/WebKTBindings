@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-apply plugin: "kotlin-multiplatform"
-apply from: rootProject.file("gradle/publish-maven.gradle")
+if (group == "web-kt-bindings" || group == "WebKTBindings") {
+    group = "net.gitout.web-kt-bindings"
+}
 
-kotlin {
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation rootProject.kotlin("kotlin-stdlib")
-            }
-        }
-        jsMain {
-            dependencies {
-                implementation rootProject.kotlinJS("kotlin-stdlib")
-            }
-        }
-    }
-    targets {
-        // Kotlin/JS
-        fromPreset(presets.js, "js")
+if (version == "unspecified") {
+    def tag = System.getenv("CI_COMMIT_TAG")
+    def commit = System.getenv("CI_COMMIT_SHA")
+    def ref = System.getenv("CI_COMMIT_REF_NAME")
+    version = tag ?: commit
+    if (ref != tag && ref != "master") {
+        version = "$ref-$version"
     }
 }

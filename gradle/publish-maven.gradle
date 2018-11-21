@@ -14,24 +14,6 @@
  * limitations under the License.
  */
 
-apply plugin: "kotlin-multiplatform"
-apply from: rootProject.file("gradle/publish-maven.gradle")
-
-kotlin {
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation rootProject.kotlin("kotlin-stdlib")
-            }
-        }
-        jsMain {
-            dependencies {
-                implementation rootProject.kotlinJS("kotlin-stdlib")
-            }
-        }
-    }
-    targets {
-        // Kotlin/JS
-        fromPreset(presets.js, "js")
-    }
-}
+apply from: rootProject.file("gradle/build-gitlab.gradle")
+apply plugin: "maven-publish"
+apply from: rootProject.file("gradle/publish-bintray.gradle")

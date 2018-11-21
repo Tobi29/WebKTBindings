@@ -14,8 +14,24 @@
  * limitations under the License.
  */
 
-apply from: "$rootDir/resources/modulekotlinjs.gradle"
+apply plugin: "kotlin-multiplatform"
+apply from: rootProject.file("gradle/publish-maven.gradle")
 
-dependencies {
-    compile rootProject.ext.kotlinJS("kotlin-stdlib")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation rootProject.kotlin("kotlin-stdlib")
+            }
+        }
+        jsMain {
+            dependencies {
+                implementation rootProject.kotlinJS("kotlin-stdlib")
+            }
+        }
+    }
+    targets {
+        // Kotlin/JS
+        fromPreset(presets.js, "js")
+    }
 }
