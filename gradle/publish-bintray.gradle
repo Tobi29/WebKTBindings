@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
+def bintrayUser = project.hasProperty("bintrayUser") ?
+        project.property("bintrayUser") : System.getenv("BINTRAY_USER")
+def bintrayKey = project.hasProperty("bintrayApiKey") ?
+        project.property("bintrayApiKey") : System.getenv("BINTRAY_API_KEY")
+
+if (bintrayUser == null || bintrayKey == null) {
+    return
+}
+
 apply plugin: "com.jfrog.bintray"
 
 bintray {
-    user = project.hasProperty("bintrayUser") ?
-            project.property("bintrayUser") : System.getenv("BINTRAY_USER")
-    key = project.hasProperty("bintrayApiKey") ?
-            project.property("bintrayApiKey") : System.getenv("BINTRAY_API_KEY")
-    
+    user = bintrayUser
+    key = bintrayKey
+
     pkg {
         repo = "scapes-engine"
         name = "web-kt-bindings"
