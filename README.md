@@ -9,7 +9,24 @@ specifications from W3C. Mistakes from MDN are likely to show here (if any).
 Compiled maven artifacts can be found on
 [Bintray](https://bintray.com/gitout/scapes-engine/kt-bindings).
 
+All platform artifacts follow a naming scheme:
+
+| Platform      | Suffix      |
+|:--------------|:------------|
+| Common        | -metadata   |
+| JVM           | -jvm        |
+| JVM (LWJGL 3) | -jvm-lwjgl3 |
+| Android       | -android    |
+| JS            | -js         |
+
 # Modules
+
+## Binding Utils
+Basic data types used by bindings.
+
+| Component               |   JVM   | JVM (LWJGL3)  | Android |   JS    |
+|:------------------------|:-------:|:-------------:|:-------:|:-------:|
+| binding-utils           |    ✓    |       ←       |    ←    |    ✓    |
 
 ## Gamepad
 Provides access to the
@@ -18,21 +35,44 @@ Provides access to the
 Also includes some very basic utilities for compatibility with webkit-prefixed
 implementations.
 
+| Component               |   JVM   | JVM (LWJGL3)  | Android |   JS    |
+|:------------------------|:-------:|:-------------:|:-------:|:-------:|
+| gamepad                 |         |               |         |    ✓    |
+
+## GL
+Provides access to [OpenGL](https://www.khronos.org/opengl).
+
+Mostly only the functionality found in the `gles` module is available.
+
+| Component               |   JVM   | JVM (LWJGL3)  | Android |   JS    |
+|:------------------------|:-------:|:-------------:|:-------:|:-------:|
+| gl                      |    →    |       ✓       |         |         |
+
+## GLES
+Provides access to [OpenGL ES](https://www.khronos.org/opengles) and
+[WebGL](https://www.khronos.org/webgl)
+([WebGL API](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)).
+
+Only a common subset of OpenGL ES and WebGL 2 is available.
+
+| Component               |   JVM   | JVM (LWJGL3)  | Android |   JS    |
+|:------------------------|:-------:|:-------------:|:-------:|:-------:|
+| gles                    |    →    |       ✓       |    ✓    |    ✓    |
+
+## GLFW
+Provides access to [GLFW](https://www.glfw.org).
+
+| Component               |   JVM   | JVM (LWJGL3)  | Android |   JS    |
+|:------------------------|:-------:|:-------------:|:-------:|:-------:|
+| glfw                    |    →    |       ✓       |         |         |
+
+
 ## WebAudio
 Provides access to the
 [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
 
 Incomplete as of yet, but most of the Web IDL of the specification is available.
 
-## WebGL2
-Provides access to the
-[WebGL API](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API),
-in particular WebGL 2 methods and constants.
-
-Result of converting the
-[Definitely Typed Headers](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/webgl2)
-to Kotlin and subsequent cleanups to better align with the existing support
-in the standard library.
-
-Some parameter types may be wrong or not as specific as possible
-(e.g. `Number` instead of `Int`).
+| Component               |   JVM   | JVM (LWJGL3)  | Android |   JS    |
+|:------------------------|:-------:|:-------------:|:-------:|:-------:|
+| webaudio                |         |               |         |    ✓    |
