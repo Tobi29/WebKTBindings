@@ -1,13 +1,13 @@
-# Kotlin Web API bindings
-Bindings to various Web APIs, which are not (yet) in the standard library.
+# Kotlin API bindings
+Bindings to various Platform APIs.
 
-Type information was mostly taken from [MDN](https://developer.mozilla.org)
-with occasional checks into the specifications from W3C. Mistakes from
-MDN are likely to show here (if any).
+JavaScript type information was mostly taken from
+[MDN](https://developer.mozilla.org) with occasional checks into the
+specifications from W3C. Mistakes from MDN are likely to show here (if any).
 
 # Artifacts
 Compiled maven artifacts can be found on
-[Bintray](https://bintray.com/gitout/scapes-engine/web-kt-bindings).
+[Bintray](https://bintray.com/gitout/scapes-engine/kt-bindings).
 
 # Modules
 

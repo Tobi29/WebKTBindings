@@ -5,11 +5,11 @@ variables:
 
 before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - export MAVEN_HOME=`pwd`/web-kt-bindings
+    - export MAVEN_HOME=`pwd`/kt-bindings
 
 build:
     stage: build
     script: ./gradlew --parallel build check publishToMavenLocal publish -Dmaven.repo.local="$MAVEN_HOME"
     artifacts:
         paths:
-            - web-kt-bindings
+            - kt-bindings

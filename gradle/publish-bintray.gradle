@@ -31,12 +31,12 @@ bintray {
 
     pkg {
         repo = "scapes-engine"
-        name = "web-kt-bindings"
+        name = "kt-bindings"
         licenses = ["Apache-2.0"]
-        websiteUrl = "https://github.com/Tobi29/WebKTBindings"
-        issueTrackerUrl = "https://github.com/Tobi29/WebKTBindings/issues"
-        githubRepo = "Tobi29/WebKTBindings"
-        vcsUrl = "https://github.com/Tobi29/WebKTBindings.git"
+        websiteUrl = "https://github.com/Tobi29/kt-bindings"
+        issueTrackerUrl = "https://github.com/Tobi29/kt-bindings/issues"
+        githubRepo = "Tobi29/kt-bindings"
+        vcsUrl = "https://github.com/Tobi29/kt-bindings.git"
         version {
             name = project.version
             vcsTag = project.version

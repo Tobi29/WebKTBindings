@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-if (group == "web-kt-bindings" || group == "WebKTBindings") {
-    group = "net.gitout.web-kt-bindings"
+if (group == "kt-bindings") {
+    group = "net.gitout.kt-bindings"
 }
 
 if (version == "unspecified") {
