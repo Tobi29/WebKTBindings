@@ -14,8 +14,24 @@
  * limitations under the License.
  */
 
+apply plugin: "com.android.library"
 apply plugin: "kotlin-multiplatform"
 apply from: rootProject.file("gradle/publish-maven.gradle")
+
+android {
+    compileSdkVersion = 28
+
+    defaultConfig {
+        targetSdkVersion 28
+        minSdkVersion 18
+        versionCode = 1
+        versionName = version
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/androidMain/kotlin"
+    }
+}
 
 kotlin {
     sourceSets {
@@ -47,6 +63,15 @@ kotlin {
         "jvm-lwjgl3Test" {
             dependsOn commonUnmanagedTest
         }
+        androidMain {
+            dependsOn commonUnmanagedMain
+            dependencies {
+                implementation rootProject.kotlinJVM("kotlin-stdlib")
+            }
+        }
+        androidTest {
+            dependsOn commonUnmanagedTest
+        }
     }
     targets {
         // Kotlin/JS
@@ -54,8 +79,28 @@ kotlin {
 
         // Kotlin/JVM (LWJGL 3)
         fromPreset(presets.jvm, "jvm-lwjgl3")
+
+        // Kotlin/Android
+        fromPreset(presets.android, "android")
     }
 }
+
+mavenAarDependencies += [[groupId: "net.gitout.kt-bindings",
+        artifactId: "binding-utils-jvm",
+        version: version,
+        scope: "compile"],
+        [groupId: "net.gitout.kt-bindings",
+                artifactId: "gles-metadata",
+                version: version,
+                scope: "compile"],
+        [groupId: "org.jetbrains.kotlin",
+                artifactId: "kotlin-stdlib",
+                version: rootProject.ext.kotlinVersion,
+                scope: "runtime"],
+        [groupId: "org.jetbrains.kotlin",
+                artifactId: "kotlin-stdlib-common",
+                version: rootProject.ext.kotlinVersion,
+                scope: "runtime"]]
 
 kotlin {
     sourceSets.each { sourceSet ->
