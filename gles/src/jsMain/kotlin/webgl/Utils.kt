@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.khronos.webgl2
+package net.gitout.ktbindings.gles.webgl
 
 import org.w3c.dom.HTMLCanvasElement
 
@@ -23,23 +23,37 @@ import org.w3c.dom.HTMLCanvasElement
  */
 @Suppress("NOTHING_TO_INLINE")
 inline fun WebGL2Options(
-        alpha: Boolean? = null,
-        depth: Boolean? = null,
-        stencil: Boolean? = null,
-        antialias: Boolean? = null,
-        premultipliedAlpha: Boolean? = null,
-        preserveDrawingBuffer: Boolean? = null,
-        failIfMajorPerformanceCaveat: Boolean? = null
+    alpha: Boolean? = null,
+    depth: Boolean? = null,
+    stencil: Boolean? = null,
+    antialias: Boolean? = null,
+    premultipliedAlpha: Boolean? = null,
+    preserveDrawingBuffer: Boolean? = null,
+    failIfMajorPerformanceCaveat: Boolean? = null
 ): Any {
     val options = object {}.asDynamic()
 
-    alpha?.let { options.alpha = it }
-    depth?.let { options.depth = it }
-    stencil?.let { options.stencil = it }
-    antialias?.let { options.antialias = it }
-    premultipliedAlpha?.let { options.premultipliedAlpha = it }
-    preserveDrawingBuffer?.let { options.preserveDrawingBuffer = it }
-    failIfMajorPerformanceCaveat?.let { options.failIfMajorPerformanceCaveat = it }
+    alpha?.let {
+        options.alpha = it
+    }
+    depth?.let {
+        options.depth = it
+    }
+    stencil?.let {
+        options.stencil = it
+    }
+    antialias?.let {
+        options.antialias = it
+    }
+    premultipliedAlpha?.let {
+        options.premultipliedAlpha = it
+    }
+    preserveDrawingBuffer?.let {
+        options.preserveDrawingBuffer = it
+    }
+    failIfMajorPerformanceCaveat?.let {
+        options.failIfMajorPerformanceCaveat = it
+    }
 
     @Suppress("UnsafeCastFromDynamic")
     return options

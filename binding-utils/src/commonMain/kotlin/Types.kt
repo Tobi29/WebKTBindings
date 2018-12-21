@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-include "binding-utils"
-include "gamepad"
-include "gl"
-include "gles"
-include "glfw"
-include "webaudio"
+package net.gitout.ktbindings.utils
+
+expect interface DataBuffer
+
+expect class ByteReadBuffer
+
+expect operator fun ByteReadBuffer.get(index: Int): Byte
+expect val ByteReadBuffer.size: Int
+
+expect class FloatReadBuffer
+
+expect operator fun FloatReadBuffer.get(index: Int): Float
+expect val FloatReadBuffer.size: Int

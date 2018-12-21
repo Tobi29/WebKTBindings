@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-include "binding-utils"
-include "gamepad"
-include "gl"
-include "gles"
-include "glfw"
-include "webaudio"
+package net.gitout.ktbindings.gles
+
+expect fun contextGLES20(): GLES20
+expect fun contextGLES30(): GLES30
+
+expect fun GLES20.makeCurrent()
+expect fun GLES20.delete()

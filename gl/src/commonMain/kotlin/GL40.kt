@@ -14,24 +14,28 @@
  * limitations under the License.
  */
 
-apply plugin: "kotlin-multiplatform"
-apply from: rootProject.file("gradle/publish-maven.gradle")
+package net.gitout.ktbindings.gl
 
-kotlin {
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation rootProject.kotlin("kotlin-stdlib")
-            }
-        }
-        jsMain {
-            dependencies {
-                implementation rootProject.kotlinJS("kotlin-stdlib")
-            }
-        }
-    }
-    targets {
-        // Kotlin/JS
-        fromPreset(presets.js, "js")
-    }
-}
+expect val GL_TRANSFORM_FEEDBACK: GLenum
+expect val GL_TRANSFORM_FEEDBACK_BINDING: GLenum
+
+expect fun GL40.glCreateTransformFeedback(
+): GLTransformFeedback
+
+expect fun GL40.glDeleteTransformFeedback(
+    tf: GLTransformFeedback
+)
+
+expect fun GL40.glIsTransformFeedback(
+    tf: GLTransformFeedback
+): GLboolean
+
+expect fun GL40.glBindTransformFeedback(
+    target: GLenum, tf: GLTransformFeedback
+)
+
+expect fun GL40.glPauseTransformFeedback(
+)
+
+expect fun GL40.glResumeTransformFeedback(
+)

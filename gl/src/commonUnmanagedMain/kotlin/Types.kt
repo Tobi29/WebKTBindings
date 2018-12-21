@@ -14,9 +14,23 @@
  * limitations under the License.
  */
 
-include "binding-utils"
-include "gamepad"
-include "gl"
-include "gles"
-include "glfw"
-include "webaudio"
+package net.gitout.ktbindings.gl
+
+expect fun contextGL11(): GL11
+expect fun contextGL12(): GL12
+expect fun contextGL13(): GL13
+expect fun contextGL14(): GL14
+expect fun contextGL15(): GL15
+expect fun contextGL20(): GL20
+expect fun contextGL21(): GL21
+expect fun contextGL30(): GL30
+expect fun contextGL31(): GL31
+expect fun contextGL32(): GL32
+expect fun contextGL33(): GL33
+expect fun contextGL40(): GL40
+expect fun contextGL41(): GL41
+expect fun contextGL42(): GL42
+expect fun contextGL43(): GL43
+
+expect fun GL11.makeCurrent()
+expect fun GL11.delete()
