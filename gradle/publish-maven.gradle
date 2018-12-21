@@ -17,3 +17,52 @@
 apply from: rootProject.file("gradle/build-gitlab.gradle")
 apply plugin: "maven-publish"
 apply from: rootProject.file("gradle/publish-bintray.gradle")
+
+if (extensions.findByName("android") != null) {
+    apply plugin: "digital.wup.android-maven-publish"
+
+    ext.mavenAarDependencies = []
+
+    // FIXME: Workaround for KT-27170
+    configurations {
+        compileClasspath
+    }
+
+    kotlin {
+        sourceSets {
+            // FIXME: Workaround for Gradle errors
+            androidDebugAndroidTest {}
+            androidDebugUnitTest {}
+            androidReleaseUnitTest {}
+        }
+    }
+
+    // FIXME: Workaround for KT-27535
+    afterEvaluate {
+        publishing {
+            publications {
+                mavenAar(MavenPublication) {
+                    artifactId = project.name + "-" +
+                            kotlin.targets.android.name.toLowerCase()
+                    from components.android
+                    artifacts.removeAll(artifacts.
+                            matching { !it.file.name.endsWith("aar") })
+                    pom.withXml {
+                        def root = asNode()
+                        def dependencies = root.get("dependencies")[0]
+                        if (dependencies == null) {
+                            dependencies = root.appendNode("dependencies")
+                        }
+                        for (artifact in mavenAarDependencies) {
+                            def dependency = dependencies.
+                                    appendNode("dependency")
+                            for (entry in artifact.entrySet()) {
+                                dependency.appendNode(entry.key, entry.value)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
