@@ -44,9 +44,11 @@ import org.lwjgl.glfw.GLFWWindowRefreshCallback
 import org.lwjgl.glfw.GLFWWindowSizeCallback
 
 actual typealias GLFWMonitor = Long
+
 actual typealias GLFWMonitorBuffer = PointerBuffer
 
 actual inline val GLFWMonitorBuffer.size get() = remaining()
+
 actual inline operator fun GLFWMonitorBuffer.get(index: Int) =
     get(position() + index)
 
@@ -59,12 +61,15 @@ actual inline val GLFWWindow_EMPTY: GLFWWindow get() = 0L
 actual typealias GLFWVidMode = org.lwjgl.glfw.GLFWVidMode
 
 actual inline val GLFWVidMode.width get() = width()
+
 actual inline val GLFWVidMode.height get() = height()
+
 actual inline val GLFWVidMode.refreshRate get() = refreshRate()
 
 actual typealias GLFWVidModeBuffer = org.lwjgl.glfw.GLFWVidMode.Buffer
 
 actual inline val GLFWVidModeBuffer.size get() = remaining()
+
 actual inline operator fun GLFWVidModeBuffer.get(index: Int) =
     get(position() + index)
 
@@ -73,17 +78,21 @@ actual typealias GLFWGammaRamp = org.lwjgl.glfw.GLFWGammaRamp
 actual typealias GLFWGamepadState = org.lwjgl.glfw.GLFWGamepadState
 
 actual inline fun GLFWGamepadState() = GLFWGamepadState.create()
+
 actual inline val GLFWGamepadState.axes: FloatReadBuffer
     get() = FloatReadBuffer(axes())
+
 actual inline val GLFWGamepadState.buttons: ByteReadBuffer
     get() = ByteReadBuffer(buttons())
 
 actual inline fun GLFWGamepadState.close() = close()
 
 actual typealias GLFWImage = org.lwjgl.glfw.GLFWImage
+
 actual typealias GLFWImageBuffer = org.lwjgl.glfw.GLFWImage.Buffer
 
 actual inline val GLFWImageBuffer.size get() = remaining()
+
 actual inline operator fun GLFWImageBuffer.get(index: Int) =
     get(position() + index)
 
