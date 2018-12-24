@@ -421,6 +421,7 @@ actual inline fun GL30.glGetBufferSubData(
     ) ?: return
     buffer.duplicate().put(mapped)
     JGL30C.glUnmapBuffer(target)
+    Unit
 }
 
 actual inline fun GL30.glBlitFramebuffer(

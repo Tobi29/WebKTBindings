@@ -573,6 +573,7 @@ actual inline fun GLES30.glGetBufferSubData(
     mapped as ByteBuffer
     buffer.duplicate().put(mapped)
     JGLES30.glUnmapBuffer(target)
+    Unit
 }
 
 actual inline fun GLES30.glBlitFramebuffer(

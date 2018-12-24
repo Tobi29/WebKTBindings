@@ -27,7 +27,7 @@ actual interface DataBuffer {
     fun write(): Pair<ByteBuffer, () -> Unit>
 }
 
-inline fun DataBuffer.read(block: (ByteBuffer) -> Unit) {
+inline fun <R> DataBuffer.read(block: (ByteBuffer) -> R): R {
     val buffer = this.read()
     try {
         return block(buffer.first)
@@ -36,7 +36,7 @@ inline fun DataBuffer.read(block: (ByteBuffer) -> Unit) {
     }
 }
 
-inline fun DataBuffer?.readOrNull(block: (ByteBuffer?) -> Unit) {
+inline fun <R> DataBuffer?.readOrNull(block: (ByteBuffer?) -> R): R {
     val buffer = this?.read()
     try {
         return block(buffer?.first)
@@ -45,7 +45,7 @@ inline fun DataBuffer?.readOrNull(block: (ByteBuffer?) -> Unit) {
     }
 }
 
-inline fun DataBuffer.write(block: (ByteBuffer) -> Unit) {
+inline fun <R> DataBuffer.write(block: (ByteBuffer) -> R): R {
     val buffer = this.write()
     try {
         return block(buffer.first)
@@ -54,7 +54,7 @@ inline fun DataBuffer.write(block: (ByteBuffer) -> Unit) {
     }
 }
 
-inline fun DataBuffer?.writeOrNull(block: (ByteBuffer?) -> Unit) {
+inline fun <R> DataBuffer?.writeOrNull(block: (ByteBuffer?) -> R): R {
     val buffer = this?.write()
     try {
         return block(buffer?.first)
