@@ -91,9 +91,9 @@ actual inline val GL_TEXTURE_IMMUTABLE_LEVELS: GLenum
     get() = JGL43C.GL_TEXTURE_IMMUTABLE_LEVELS
 
 actual inline fun GL43.glDebugMessageCallback(
-    callback: GLDebugMessageCallback, userParam: Long
+    callback: GLDebugMessageCallback
 ) = JGL43C.glDebugMessageCallback(
-    callback, userParam
+    callback, 0L
 )
 
 actual inline fun GL43.glDebugMessageControl(
@@ -122,11 +122,11 @@ actual typealias GLDebugMessageCallback =
 actual inline fun GLDebugMessageCallback(
     crossinline callback: (
         source: GLenum, type: GLenum, id: GLuint, severity: GLenum,
-        message: String?, userParam: Long
+        message: String?
     ) -> Unit
 ) = GLDebugMessageCallback.create { source, type, id, severity, length,
-                                    message, userParam ->
+                                    message, _ ->
     val messageBuffer = MemoryUtil.memByteBufferSafe(message, length)
     val messageString = messageBuffer?.let { MemoryUtil.memUTF8(it) }
-    callback(source, type, id.toUInt(), severity, messageString, userParam)
+    callback(source, type, id.toUInt(), severity, messageString)
 }

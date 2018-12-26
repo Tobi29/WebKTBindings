@@ -52,7 +52,7 @@ expect val GL_MAX_LABEL_LENGTH: GLenum
 expect val GL_TEXTURE_IMMUTABLE_LEVELS: GLenum
 
 expect fun GL43.glDebugMessageCallback(
-    callback: GLDebugMessageCallback, userParam: Long = 0L
+    callback: GLDebugMessageCallback
 )
 
 expect fun GL43.glDebugMessageControl(
@@ -76,6 +76,6 @@ expect abstract class GLDebugMessageCallback {
 expect fun GLDebugMessageCallback(
     callback: (
         source: GLenum, type: GLenum, id: GLuint, severity: GLenum,
-        message: String?, userParam: Long
+        message: String?
     ) -> Unit
 ): GLDebugMessageCallback
