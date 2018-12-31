@@ -85,9 +85,9 @@ actual inline fun stbtt_BakeFontBitmap(
     data: DataBuffer, pixel_height: Float, pixels: DataBuffer, pw: Int, ph: Int,
     first_char: Int, chardata: STBTTBakedCharBuffer
 ) = data.read { buffer ->
-    pixels.write { pixelsBuffer ->
+    pixels.write { bufferPixels ->
         STBTruetype.stbtt_BakeFontBitmap(
-            buffer, pixel_height, pixelsBuffer, pw, ph, first_char, chardata
+            buffer, pixel_height, bufferPixels, pw, ph, first_char, chardata
         )
     }
 }
