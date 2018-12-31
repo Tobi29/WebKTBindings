@@ -17,6 +17,12 @@
 package net.gitout.ktbindings.utils
 
 expect interface DataBuffer
+expect class DataBufferPinned {
+    fun close()
+}
+
+expect fun DataBuffer.pinRead(): DataBufferPinned
+expect fun DataBuffer.pinWrite(): DataBufferPinned
 
 expect class ByteReadBuffer
 

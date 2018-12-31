@@ -17,6 +17,7 @@
 package net.gitout.ktbindings.stb.ttf
 
 import net.gitout.ktbindings.utils.DataBuffer
+import net.gitout.ktbindings.utils.DataBufferPinned
 
 expect val STBTT_vmove: Byte
 expect val STBTT_vline: Byte
@@ -148,11 +149,11 @@ expect fun stbtt_GetFontOffsetForIndex(
 ): Int
 
 expect fun stbtt_InitFont(
-    info: STBTTFontinfo, data: DataBuffer, offset: Int
+    info: STBTTFontinfo, data: DataBufferPinned, offset: Int
 ): Boolean
 
 expect fun stbtt_InitFont(
-    info: STBTTFontinfo, data: DataBuffer
+    info: STBTTFontinfo, data: DataBufferPinned
 ): Boolean
 
 expect fun stbtt_FindGlyphIndex(

@@ -27,6 +27,20 @@ actual interface DataBuffer {
     fun write(): Pair<ByteBuffer, () -> Unit>
 }
 
+actual class DataBufferPinned(
+    val buffer: ByteBuffer,
+    private val close: () -> Unit
+) {
+    constructor(
+        pair: Pair<ByteBuffer, () -> Unit>
+    ) : this(pair.first, pair.second)
+
+    actual fun close() = close.invoke()
+}
+
+actual inline fun DataBuffer.pinRead() = DataBufferPinned(read())
+actual inline fun DataBuffer.pinWrite() = DataBufferPinned(write())
+
 inline fun <R> DataBuffer.read(block: (ByteBuffer) -> R): R {
     val buffer = this.read()
     try {

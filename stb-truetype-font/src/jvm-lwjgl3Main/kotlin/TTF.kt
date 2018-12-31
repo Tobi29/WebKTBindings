@@ -18,10 +18,7 @@
 
 package net.gitout.ktbindings.stb.ttf
 
-import net.gitout.ktbindings.utils.DataBuffer
-import net.gitout.ktbindings.utils.read
-import net.gitout.ktbindings.utils.write
-import net.gitout.ktbindings.utils.writeOrNull
+import net.gitout.ktbindings.utils.*
 import org.lwjgl.stb.STBTruetype
 
 actual inline val STBTT_vmove get() = STBTruetype.STBTT_vmove
@@ -201,20 +198,16 @@ actual inline fun stbtt_GetFontOffsetForIndex(
 }
 
 actual inline fun stbtt_InitFont(
-    info: STBTTFontinfo, data: DataBuffer, offset: Int
-) = data.read { buffer ->
-    STBTruetype.stbtt_InitFont(
-        info, buffer, offset
-    )
-}
+    info: STBTTFontinfo, data: DataBufferPinned, offset: Int
+) = STBTruetype.stbtt_InitFont(
+    info, data.buffer, offset
+)
 
 actual inline fun stbtt_InitFont(
-    info: STBTTFontinfo, data: DataBuffer
-) = data.read { buffer ->
-    STBTruetype.stbtt_InitFont(
-        info, buffer
-    )
-}
+    info: STBTTFontinfo, data: DataBufferPinned
+) = STBTruetype.stbtt_InitFont(
+    info, data.buffer
+)
 
 actual inline fun stbtt_FindGlyphIndex(
     info: STBTTFontinfo, unicode_codepoint: Int
