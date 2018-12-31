@@ -17,7 +17,7 @@
 package net.gitout.ktbindings.utils
 
 expect interface DataBuffer
-expect class DataBufferPinned {
+expect class DataBufferPinned : DataBuffer {
     fun close()
 }
 

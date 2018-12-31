@@ -30,10 +30,12 @@ actual interface DataBuffer {
 actual class DataBufferPinned(
     val buffer: ByteBuffer,
     private val close: () -> Unit
-) {
+) : DataBuffer {
     constructor(
         pair: Pair<ByteBuffer, () -> Unit>
     ) : this(pair.first, pair.second)
+
+    override fun write() = buffer to {}
 
     actual fun close() = close.invoke()
 }

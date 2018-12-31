@@ -31,10 +31,12 @@ actual interface DataBuffer {
 actual class DataBufferPinned(
     val buffer: ArrayBufferView,
     private val close: () -> Unit
-) {
+) : DataBuffer {
     constructor(
         pair: Pair<ArrayBufferView, () -> Unit>
     ) : this(pair.first, pair.second)
+
+    override fun write() = buffer to {}
 
     actual fun close() = close.invoke()
 }
