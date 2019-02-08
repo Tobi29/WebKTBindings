@@ -42,6 +42,11 @@ bintray {
             vcsTag = project.version
         }
     }
+
+    afterEvaluate {
+        publications = publishing.publications.collect { it.name }
+                .findAll { it != "kotlinMultiplatform" }
+    }
 }
 
 tasks.findByName("publish")?.dependsOn("bintrayUpload")
