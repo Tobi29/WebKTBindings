@@ -43,9 +43,12 @@ bintray {
         }
     }
 
+    // FIXME: This is really hacky
     afterEvaluate {
-        publications = publishing.publications.collect { it.name }
-                .findAll { it != "kotlinMultiplatform" }
+        afterEvaluate {
+            publications = publishing.publications.collect { it.name }
+                    .findAll { it != "kotlinMultiplatform" }
+        }
     }
 }
 
