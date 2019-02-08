@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 buildscript {
-    def kotlinVersion = "1.3.10"
+    def kotlinVersion = "1.3.21"
     def dokkaVersion = "0.9.17"
     def androidBuildVersion = "3.2.1"
     def androidMavenPublishVersion = "3.6.2"
@@ -49,6 +49,7 @@ allprojects {
             kotlin.sourceSets.each { sourceSet ->
                 sourceSet.languageSettings {
                     useExperimentalAnnotation "kotlin.Experimental"
+                    useExperimentalAnnotation "kotlin.ExperimentalUnsignedTypes"
                 }
             }
         }
@@ -64,12 +65,12 @@ allprojects {
 }
 
 ext {
-    kotlinVersion = "1.3.10"
+    kotlinVersion = "1.3.21"
     kotlinBase = { module -> "org.jetbrains.kotlin:$module:$kotlinVersion" }
     kotlin = { module -> kotlinBase("$module-common") }
     kotlinJVM = { module -> kotlinBase("$module") }
     kotlinJS = { module -> kotlinBase("$module-js") }
 
-    lwjglVersion = "3.2.0"
+    lwjglVersion = "3.2.1"
     lwjglJVM = { module -> "org.lwjgl:$module:$lwjglVersion" }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,29 +83,7 @@ kotlin {
         // Kotlin/Android
         fromPreset(presets.android, "android")
     }
-}
-
-mavenAarDependencies += [[groupId: "net.gitout.kt-bindings",
-        artifactId: "binding-utils-jvm",
-        version: version,
-        scope: "compile"],
-        [groupId: "net.gitout.kt-bindings",
-                artifactId: "gles-metadata",
-                version: version,
-                scope: "compile"],
-        [groupId: "org.jetbrains.kotlin",
-                artifactId: "kotlin-stdlib",
-                version: rootProject.ext.kotlinVersion,
-                scope: "runtime"],
-        [groupId: "org.jetbrains.kotlin",
-                artifactId: "kotlin-stdlib-common",
-                version: rootProject.ext.kotlinVersion,
-                scope: "runtime"]]
-
-kotlin {
-    sourceSets.each { sourceSet ->
-        sourceSet.languageSettings {
-            useExperimentalAnnotation "kotlin.ExperimentalUnsignedTypes"
-        }
+    android {
+        publishLibraryVariants("release", "debug")
     }
 }
