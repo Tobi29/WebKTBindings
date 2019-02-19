@@ -21,6 +21,13 @@ All platform artifacts follow a naming scheme:
 
 # Modules
 
+## AL
+Provides access to [OpenAL](https://openal.org).
+
+| Component               |   JVM   | JVM (LWJGL3)  | Android |   JS    |
+|:------------------------|:-------:|:-------------:|:-------:|:-------:|
+| al                      |    →    |       ✓       |    ✓    |         |
+
 ## Binding Utils
 Basic data types used by bindings.
 
@@ -66,6 +73,20 @@ Provides access to [GLFW](https://www.glfw.org).
 |:------------------------|:-------:|:-------------:|:-------:|:-------:|
 | glfw                    |    →    |       ✓       |         |         |
 
+## STB TrueType Font
+Provides access to [STB TrueType Font](https://github.com/nothings/stb).
+
+| Component               |   JVM   | JVM (LWJGL3)  | Android |   JS    |
+|:------------------------|:-------:|:-------------:|:-------:|:-------:|
+| stb-truetype-font       |    →    |       ✓       |         |         |
+
+## TinyFd
+Provides access to
+[Tiny File Dialogs](https://sourceforge.net/projects/tinyfiledialogs).
+
+| Component               |   JVM   | JVM (LWJGL3)  | Android |   JS    |
+|:------------------------|:-------:|:-------------:|:-------:|:-------:|
+| tinyfd                  |    →    |       ✓       |         |         |
 
 ## WebAudio
 Provides access to the
