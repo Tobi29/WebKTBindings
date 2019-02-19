@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -771,16 +771,16 @@ actual inline fun GLES20.glCopyTexSubImage2D(
 )
 
 actual inline fun GLES20.glCreateBuffer(
-) = readInts { i0 ->
+) = readInt { i0 ->
     JGLES20.glGenBuffers(
-        1, i0
+        1, i0, 0
     )
 }
 
 actual inline fun GLES20.glCreateFramebuffer(
-) = readInts { i0 ->
+) = readInt { i0 ->
     JGLES20.glGenFramebuffers(
-        1, i0
+        1, i0, 0
     )
 }
 
@@ -789,9 +789,9 @@ actual inline fun GLES20.glCreateProgram(
 )
 
 actual inline fun GLES20.glCreateRenderbuffer(
-) = readInts { i0 ->
+) = readInt { i0 ->
     JGLES20.glGenRenderbuffers(
-        1, i0
+        1, i0, 0
     )
 }
 
@@ -802,9 +802,9 @@ actual inline fun GLES20.glCreateShader(
 )
 
 actual inline fun GLES20.glCreateTexture(
-) = readInts { i0 ->
+) = readInt { i0 ->
     JGLES20.glGenTextures(
-        1, i0
+        1, i0, 0
     )
 }
 
@@ -816,19 +816,15 @@ actual inline fun GLES20.glCullFace(
 
 actual inline fun GLES20.glDeleteBuffer(
     buffer: GLBuffer
-) = intBuffers(buffer) { i0 ->
-    JGLES20.glDeleteBuffers(
-        1, i0
-    )
-}
+) = JGLES20.glDeleteBuffers(
+    1, intArrayOf(buffer), 0
+)
 
 actual inline fun GLES20.glDeleteFramebuffer(
     framebuffer: GLFramebuffer
-) = intBuffers(framebuffer) { i0 ->
-    JGLES20.glDeleteFramebuffers(
-        1, i0
-    )
-}
+) = JGLES20.glDeleteFramebuffers(
+    1, intArrayOf(framebuffer), 0
+)
 
 actual inline fun GLES20.glDeleteProgram(
     program: GLProgram
@@ -838,11 +834,9 @@ actual inline fun GLES20.glDeleteProgram(
 
 actual inline fun GLES20.glDeleteRenderbuffer(
     renderbuffer: GLRenderbuffer
-) = intBuffers(renderbuffer) { i0 ->
-    JGLES20.glDeleteRenderbuffers(
-        1, i0
-    )
-}
+) = JGLES20.glDeleteRenderbuffers(
+    1, intArrayOf(renderbuffer), 0
+)
 
 actual inline fun GLES20.glDeleteShader(
     shader: GLShader
@@ -852,11 +846,9 @@ actual inline fun GLES20.glDeleteShader(
 
 actual inline fun GLES20.glDeleteTexture(
     texture: GLTexture
-) = intBuffers(texture) { i0 ->
-    JGLES20.glDeleteTextures(
-        1, i0
-    )
-}
+) = JGLES20.glDeleteTextures(
+    1, intArrayOf(texture), 0
+)
 
 actual inline fun GLES20.glDepthFunc(
     func: GLenum
@@ -1006,9 +998,9 @@ actual inline fun GLES20.glGetFramebufferAttachmentParameteriv(
 
 actual inline fun GLES20.glGetProgramb(
     program: GLProgram, pname: GLenum
-): GLboolean = readInts { i0 ->
+): GLboolean = readInt { i0 ->
     JGLES20.glGetProgramiv(
-        program, pname, i0
+        program, pname, i0, 0
     )
 } != JGLES20.GL_FALSE
 

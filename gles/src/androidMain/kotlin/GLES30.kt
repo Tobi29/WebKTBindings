@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -853,19 +853,17 @@ actual inline fun GLES30.glClearBufferfi(
 )
 
 actual inline fun GLES30.glCreateQuery(
-) = readInts { i0 ->
+) = readInt { i0 ->
     JGLES30.glGenQueries(
-        1, i0
+        1, i0, 0
     )
 }
 
 actual inline fun GLES30.glDeleteQuery(
     query: GLQuery
-) = intBuffers(query) { i0 ->
-    JGLES30.glDeleteQueries(
-        1, i0
-    )
-}
+) = JGLES30.glDeleteQueries(
+    1, intArrayOf(query), 0
+)
 
 actual inline fun GLES30.glIsQuery(
     query: GLQuery
@@ -887,9 +885,9 @@ actual inline fun GLES30.glEndQuery(
 
 actual inline fun GLES30.glGetQuery(
     target: GLenum, pname: GLenum
-) = readInts { i0 ->
+) = readInt { i0 ->
     JGLES30.glGetQueryiv(
-        target, pname, i0
+        target, pname, i0, 0
     )
 }
 
@@ -900,19 +898,17 @@ actual inline fun GLES30.glGetQueryObjectuiv(
 )
 
 actual inline fun GLES30.glCreateSampler(
-) = readInts { i0 ->
+) = readInt { i0 ->
     JGLES30.glGenSamplers(
-        1, i0
+        1, i0, 0
     )
 }
 
 actual inline fun GLES30.glDeleteSampler(
     sampler: GLSampler
-) = intBuffers(sampler) { i0 ->
-    JGLES30.glDeleteSamplers(
-        1, i0
-    )
-}
+) = JGLES30.glDeleteSamplers(
+    1, intArrayOf(sampler), 0
+)
 
 actual inline fun GLES30.glIsSampler(
     sampler: GLSampler
@@ -988,19 +984,17 @@ actual inline fun GLES30.glGetSynciv(
 )
 
 actual inline fun GLES30.glCreateTransformFeedback(
-) = readInts { i0 ->
+) = readInt { i0 ->
     JGLES30.glGenTransformFeedbacks(
-        1, i0
+        1, i0, 0
     )
 }
 
 actual inline fun GLES30.glDeleteTransformFeedback(
     tf: GLTransformFeedback
-) = intBuffers(tf) { i0 ->
-    JGLES30.glDeleteTransformFeedbacks(
-        1, i0
-    )
-}
+) = JGLES30.glDeleteTransformFeedbacks(
+    1, intArrayOf(tf), 0
+)
 
 actual inline fun GLES30.glIsTransformFeedback(
     tf: GLTransformFeedback
@@ -1092,19 +1086,17 @@ actual inline fun GLES30.glUniformBlockBinding(
 )
 
 actual inline fun GLES30.glCreateVertexArray(
-) = readInts { i0 ->
+) = readInt { i0 ->
     JGLES30.glGenVertexArrays(
-        1, i0
+        1, i0, 0
     )
 }
 
 actual inline fun GLES30.glDeleteVertexArray(
     vertexArray: GLVertexArrayObject
-) = intBuffers(vertexArray) { i0 ->
-    JGLES30.glDeleteVertexArrays(
-        1, i0
-    )
-}
+) = JGLES30.glDeleteVertexArrays(
+    1, intArrayOf(vertexArray), 0
+)
 
 actual inline fun GLES30.glIsVertexArray(
     vertexArray: GLVertexArrayObject
