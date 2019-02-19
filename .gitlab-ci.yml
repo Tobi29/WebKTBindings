@@ -1,4 +1,4 @@
-image: mingc/android-build-box
+image: mingc/android-build-box:1.7.0
 
 variables:
     GIT_SUBMODULE_STRATEGY: "recursive"
