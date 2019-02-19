@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-enableFeaturePreview("GRADLE_METADATA")
+package org.tobi29.scapes.engine.android.openal.bind
 
-include "al"
-include "binding-utils"
-include "gamepad"
-include "gl"
-include "gles"
-include "glfw"
-include "stb-truetype-font"
-include "tinyfd"
-include "webaudio"
+internal object OpenAL {
+    init {
+        System.loadLibrary("openal")
+    }
+
+    fun touch() {}
+}

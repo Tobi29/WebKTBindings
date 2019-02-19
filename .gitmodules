@@ -1,0 +1,3 @@
+[submodule "al/ext/openal-soft"]
+	path = al/ext/openal-soft
+	url = https://github.com/Tobi29/openal-soft

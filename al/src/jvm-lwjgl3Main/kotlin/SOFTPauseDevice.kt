@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-enableFeaturePreview("GRADLE_METADATA")
+@file:Suppress("NOTHING_TO_INLINE")
 
-include "al"
-include "binding-utils"
-include "gamepad"
-include "gl"
-include "gles"
-include "glfw"
-include "stb-truetype-font"
-include "tinyfd"
-include "webaudio"
+package net.gitout.ktbindings.al
+
+import org.lwjgl.openal.SOFTPauseDevice as JSOFTPauseDevice
+
+actual inline fun alcDeviceResumeSOFT(
+    device: ALCDevice
+) = JSOFTPauseDevice.alcDeviceResumeSOFT(
+    device
+)
+
+actual inline fun alcDevicePauseSOFT(
+    device: ALCDevice
+) = JSOFTPauseDevice.alcDevicePauseSOFT(
+    device
+)

@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-enableFeaturePreview("GRADLE_METADATA")
+package net.gitout.ktbindings.al
 
-include "al"
-include "binding-utils"
-include "gamepad"
-include "gl"
-include "gles"
-include "glfw"
-include "stb-truetype-font"
-include "tinyfd"
-include "webaudio"
+expect fun alcDeviceResumeSOFT(
+    device: ALCDevice
+)
+
+expect fun alcDevicePauseSOFT(
+    device: ALCDevice
+)

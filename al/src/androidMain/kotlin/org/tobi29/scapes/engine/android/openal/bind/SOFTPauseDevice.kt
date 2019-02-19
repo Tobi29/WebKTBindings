@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-enableFeaturePreview("GRADLE_METADATA")
+package org.tobi29.scapes.engine.android.openal.bind
 
-include "al"
-include "binding-utils"
-include "gamepad"
-include "gl"
-include "gles"
-include "glfw"
-include "stb-truetype-font"
-include "tinyfd"
-include "webaudio"
+object SOFTPauseDevice {
+    init {
+        OpenAL.touch()
+    }
+
+    external fun alcDeviceResumeSOFT(p0: Long)
+    external fun alcDevicePauseSOFT(p0: Long)
+}
