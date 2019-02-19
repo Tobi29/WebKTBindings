@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,15 @@ package net.gitout.ktbindings.stb.ttf
 
 import net.gitout.ktbindings.utils.DataBuffer
 import java.nio.ByteBuffer
+import org.lwjgl.stb.STBRPRect as JSTBRPRect
+import org.lwjgl.stb.STBTTAlignedQuad as JSTBTTAlignedQuad
+import org.lwjgl.stb.STBTTBakedChar as JSTBTTBakedChar
+import org.lwjgl.stb.STBTTBitmap as JSTBTTBitmap
+import org.lwjgl.stb.STBTTFontinfo as JSTBTTFontinfo
+import org.lwjgl.stb.STBTTPackContext as JSTBTTPackContext
+import org.lwjgl.stb.STBTTPackedchar as JSTBTTPackedchar
+import org.lwjgl.stb.STBTTPackRange as JSTBTTPackRange
+import org.lwjgl.stb.STBTTVertex as JSTBTTVertex
 
 actual class STBDataBuffer(
     @PublishedApi
@@ -29,75 +38,117 @@ actual class STBDataBuffer(
     override fun write(): Pair<ByteBuffer, () -> Unit> = buffer to {}
 }
 
-actual typealias STBRPRect = org.lwjgl.stb.STBRPRect
+actual class STBRPRect(
+    @PublishedApi
+    internal val struct: JSTBRPRect
+)
 
-actual inline fun STBRPRect.close() = close()
+actual inline fun STBRPRect.close() = struct.close()
 
-actual typealias STBRPRectBuffer = org.lwjgl.stb.STBRPRect.Buffer
+actual class STBRPRectBuffer(
+    @PublishedApi
+    internal val struct: JSTBRPRect.Buffer
+)
 
-actual inline val STBRPRectBuffer.size get() = remaining()
+actual inline val STBRPRectBuffer.size get() = struct.remaining()
 
 actual inline operator fun STBRPRectBuffer.get(index: Int) =
-    get(position() + index)
+    STBRPRect(struct.get(struct.position() + index))
 
-actual typealias STBTTAlignedQuad = org.lwjgl.stb.STBTTAlignedQuad
+actual class STBTTAlignedQuad(
+    @PublishedApi
+    internal val struct: JSTBTTAlignedQuad
+)
 
-actual inline fun STBTTAlignedQuad.close() = close()
+actual inline fun STBTTAlignedQuad.close() = struct.close()
 
-actual typealias STBTTBakedChar = org.lwjgl.stb.STBTTBakedChar
+actual class STBTTBakedChar(
+    @PublishedApi
+    internal val struct: JSTBTTBakedChar
+)
 
-actual inline fun STBTTBakedChar.close() = close()
+actual inline fun STBTTBakedChar.close() = struct.close()
 
-actual typealias STBTTBakedCharBuffer = org.lwjgl.stb.STBTTBakedChar.Buffer
+actual class STBTTBakedCharBuffer(
+    @PublishedApi
+    internal val struct: JSTBTTBakedChar.Buffer
+)
 
-actual inline val STBTTBakedCharBuffer.size get() = remaining()
+actual inline val STBTTBakedCharBuffer.size get() = struct.remaining()
 
 actual inline operator fun STBTTBakedCharBuffer.get(index: Int) =
-    get(position() + index)
+    STBTTBakedChar(struct.get(struct.position() + index))
 
-actual typealias STBTTBitmap = org.lwjgl.stb.STBTTBitmap
+actual class STBTTBitmap(
+    @PublishedApi
+    internal val struct: JSTBTTBitmap
+)
 
-actual inline fun STBTTBitmap.close() = close()
+actual inline fun STBTTBitmap.close() = struct.close()
 
-actual typealias STBTTFontinfo = org.lwjgl.stb.STBTTFontinfo
+actual class STBTTFontinfo(
+    @PublishedApi
+    internal val struct: JSTBTTFontinfo
+)
 
-actual inline fun STBTTFontinfo() = STBTTFontinfo.malloc()
+actual inline fun STBTTFontinfo() = STBTTFontinfo(JSTBTTFontinfo.malloc())
 
-actual inline fun STBTTFontinfo.close() = close()
+actual inline fun STBTTFontinfo.close() = struct.close()
 
-actual typealias STBTTPackContext = org.lwjgl.stb.STBTTPackContext
+actual class STBTTPackContext(
+    @PublishedApi
+    internal val struct: JSTBTTPackContext
+)
 
-actual inline fun STBTTPackContext.close() = close()
+actual inline fun STBTTPackContext.close() = struct.close()
 
-actual typealias STBTTPackedchar = org.lwjgl.stb.STBTTPackedchar
+actual class STBTTPackedchar(
+    @PublishedApi
+    internal val struct: JSTBTTPackedchar
+)
 
-actual inline fun STBTTPackedchar.close() = close()
+actual inline fun STBTTPackedchar.close() = struct.close()
 
-actual typealias STBTTPackedcharBuffer = org.lwjgl.stb.STBTTPackedchar.Buffer
+actual class STBTTPackedcharBuffer(
+    @PublishedApi
+    internal val struct: JSTBTTPackedchar.Buffer
+)
 
-actual inline val STBTTPackedcharBuffer.size get() = remaining()
+actual inline val STBTTPackedcharBuffer.size get() = struct.remaining()
 
 actual inline operator fun STBTTPackedcharBuffer.get(index: Int) =
-    get(position() + index)
+    STBTTPackedchar(struct.get(struct.position() + index))
 
-actual typealias STBTTPackRange = org.lwjgl.stb.STBTTPackRange
+actual class STBTTPackRange(
+    @PublishedApi
+    internal val struct: JSTBTTPackRange
+)
 
-actual inline fun STBTTPackRange.close() = close()
+actual inline fun STBTTPackRange.close() = struct.close()
 
-actual typealias STBTTPackRangeBuffer = org.lwjgl.stb.STBTTPackRange.Buffer
+actual class STBTTPackRangeBuffer(
+    @PublishedApi
+    internal val struct: JSTBTTPackRange.Buffer
+)
 
-actual inline val STBTTPackRangeBuffer.size get() = remaining()
+actual inline val STBTTPackRangeBuffer.size get() = struct.remaining()
 
 actual inline operator fun STBTTPackRangeBuffer.get(index: Int) =
-    get(position() + index)
+    STBTTPackRange(struct.get(struct.position() + index))
 
-actual typealias STBTTVertex = org.lwjgl.stb.STBTTVertex
+actual class STBTTVertex(
+    @PublishedApi
+    internal val struct: JSTBTTVertex
+)
 
-actual inline fun STBTTVertex.close() = close()
+actual inline fun STBTTVertex.close() = struct.close()
 
-actual typealias STBTTVertexBuffer = org.lwjgl.stb.STBTTVertex.Buffer
+actual class STBTTVertexBuffer(
+    @PublishedApi
+    internal val struct: JSTBTTVertex.Buffer
+)
 
-actual inline val STBTTVertexBuffer.size get() = remaining()
+actual inline val STBTTVertexBuffer.size get() = struct.remaining()
 
 actual inline operator fun STBTTVertexBuffer.get(index: Int) =
-    get(position() + index)
+    STBTTVertex(struct.get(struct.position() + index))

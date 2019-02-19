@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 
 package net.gitout.ktbindings.gl
 
-import org.lwjgl.system.MemoryUtil
 import org.lwjgl.opengl.GL43C as JGL43C
 
 actual inline val GL_ANY_SAMPLES_PASSED_CONSERVATIVE: GLenum
@@ -93,7 +92,7 @@ actual inline val GL_TEXTURE_IMMUTABLE_LEVELS: GLenum
 actual inline fun GL43.glDebugMessageCallback(
     callback: GLDebugMessageCallback
 ) = JGL43C.glDebugMessageCallback(
-    callback, 0L
+    callback.callback, 0L
 )
 
 actual inline fun GL43.glDebugMessageControl(
@@ -115,18 +114,3 @@ actual inline fun GL43.glInvalidateSubFramebuffer(
 ) = JGL43C.glInvalidateSubFramebuffer(
     target, attachments, x, y, width, height
 )
-
-actual typealias GLDebugMessageCallback =
-        org.lwjgl.opengl.GLDebugMessageCallback
-
-actual inline fun GLDebugMessageCallback(
-    crossinline callback: (
-        source: GLenum, type: GLenum, id: GLuint, severity: GLenum,
-        message: String?
-    ) -> Unit
-) = GLDebugMessageCallback.create { source, type, id, severity, length,
-                                    message, _ ->
-    val messageBuffer = MemoryUtil.memByteBufferSafe(message, length)
-    val messageString = messageBuffer?.let { MemoryUtil.memUTF8(it) }
-    callback(source, type, id.toUInt(), severity, messageString)
-}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,6 +86,17 @@ expect val emptyGLVertexArrayObject: GLVertexArrayObject
 expect class GLUniformLocation
 
 expect val emptyGLUniformLocation: GLUniformLocation
+
+expect class GLDebugMessageCallback {
+    fun close()
+}
+
+expect fun GLDebugMessageCallback(
+    callback: (
+        source: GLenum, type: GLenum, id: GLuint, severity: GLenum,
+        message: String?
+    ) -> Unit
+): GLDebugMessageCallback
 
 typealias DOMString = String
 

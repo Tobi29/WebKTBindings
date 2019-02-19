@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -348,7 +348,7 @@ actual inline fun glfwGetError(
         return GLFW.glfwGetError(descriptionBuffer).also {
             if (description != null && descriptionBuffer != null) {
                 description[0] =
-                        MemoryUtil.memUTF8Safe(descriptionBuffer.get(0))
+                    MemoryUtil.memUTF8Safe(descriptionBuffer.get(0))
             }
         }
     } finally {
@@ -359,12 +359,12 @@ actual inline fun glfwGetError(
 actual inline fun glfwSetErrorCallback(
     cbfun: GLFWErrorCallback?
 ) = GLFW.glfwSetErrorCallback(
-    cbfun
-)
+    cbfun?.callback
+)?.let { GLFWErrorCallback(it) }
 
 actual inline fun glfwGetMonitors(
 ) = GLFW.glfwGetMonitors(
-)
+)?.let { GLFWMonitorBuffer(it) }
 
 actual inline fun glfwGetPrimaryMonitor(
 ) = GLFW.glfwGetPrimaryMonitor(
@@ -409,20 +409,20 @@ actual inline fun glfwGetMonitorUserPointer(
 actual inline fun glfwSetMonitorCallback(
     cbfun: GLFWMonitorCallback?
 ) = GLFW.glfwSetMonitorCallback(
-    cbfun
-)
+    cbfun?.callback
+)?.let { GLFWMonitorCallback(it) }
 
 actual inline fun glfwGetVideoModes(
     monitor: GLFWMonitor
 ) = GLFW.glfwGetVideoModes(
     monitor
-)
+)?.let { GLFWVidModeBuffer(it) }
 
 actual inline fun glfwGetVideoMode(
     monitor: GLFWMonitor
 ) = GLFW.glfwGetVideoMode(
     monitor
-)
+)?.let { GLFWVidMode(it) }
 
 actual inline fun glfwSetGamma(
     monitor: GLFWMonitor, gamma: Float
@@ -434,12 +434,12 @@ actual inline fun glfwGetGammaRamp(
     monitor: GLFWMonitor
 ) = GLFW.glfwGetGammaRamp(
     monitor
-)
+)?.let { GLFWGammaRamp(it) }
 
 actual inline fun glfwSetGammaRamp(
     monitor: GLFWMonitor, ramp: GLFWGammaRamp
 ) = GLFW.glfwSetGammaRamp(
-    monitor, ramp
+    monitor, ramp.struct
 )
 
 actual inline fun glfwDefaultWindowHints(
@@ -485,7 +485,7 @@ actual inline fun glfwSetWindowTitle(
 actual inline fun glfwSetWindowIcon(
     window: GLFWWindow, images: GLFWImageBuffer
 ) = GLFW.glfwSetWindowIcon(
-    window, images
+    window, images.struct
 )
 
 actual inline fun glfwGetWindowPos(
@@ -640,56 +640,56 @@ actual inline fun glfwGetWindowUserPointer(
 actual inline fun glfwSetWindowPosCallback(
     window: GLFWWindow, cbfun: GLFWWindowPosCallback?
 ) = GLFW.glfwSetWindowPosCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWWindowPosCallback(it) }
 
 actual inline fun glfwSetWindowSizeCallback(
     window: GLFWWindow, cbfun: GLFWWindowSizeCallback?
 ) = GLFW.glfwSetWindowSizeCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWWindowSizeCallback(it) }
 
 actual inline fun glfwSetWindowCloseCallback(
     window: GLFWWindow, cbfun: GLFWWindowCloseCallback?
 ) = GLFW.glfwSetWindowCloseCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWWindowCloseCallback(it) }
 
 actual inline fun glfwSetWindowRefreshCallback(
     window: GLFWWindow, cbfun: GLFWWindowRefreshCallback?
 ) = GLFW.glfwSetWindowRefreshCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWWindowRefreshCallback(it) }
 
 actual inline fun glfwSetWindowFocusCallback(
     window: GLFWWindow, cbfun: GLFWWindowFocusCallback?
 ) = GLFW.glfwSetWindowFocusCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWWindowFocusCallback(it) }
 
 actual inline fun glfwSetWindowIconifyCallback(
     window: GLFWWindow, cbfun: GLFWWindowIconifyCallback?
 ) = GLFW.glfwSetWindowIconifyCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWWindowIconifyCallback(it) }
 
 actual inline fun glfwSetWindowMaximizeCallback(
     window: GLFWWindow, cbfun: GLFWWindowMaximizeCallback?
 ) = GLFW.glfwSetWindowMaximizeCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWWindowMaximizeCallback(it) }
 
 actual inline fun glfwSetFramebufferSizeCallback(
     window: GLFWWindow, cbfun: GLFWFramebufferSizeCallback?
 ) = GLFW.glfwSetFramebufferSizeCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWFramebufferSizeCallback(it) }
 
 actual inline fun glfwSetWindowContentScaleCallback(
     window: GLFWWindow, cbfun: GLFWWindowContentScaleCallback?
 ) = GLFW.glfwSetWindowContentScaleCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWWindowContentScaleCallback(it) }
 
 actual inline fun glfwPollEvents(
 ) = GLFW.glfwPollEvents(
@@ -760,7 +760,7 @@ actual inline fun glfwSetCursorPos(
 actual inline fun glfwCreateCursor(
     image: GLFWImage, xhot: Int, yhot: Int
 ) = GLFW.glfwCreateCursor(
-    image, xhot, yhot
+    image.struct, xhot, yhot
 )
 
 actual inline fun glfwCreateStandardCursor(
@@ -784,50 +784,50 @@ actual inline fun glfwSetCursor(
 actual inline fun glfwSetKeyCallback(
     window: GLFWWindow, cbfun: GLFWKeyCallback?
 ) = GLFW.glfwSetKeyCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWKeyCallback(it) }
 
 actual inline fun glfwSetCharCallback(
     window: GLFWWindow, cbfun: GLFWCharCallback?
 ) = GLFW.glfwSetCharCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWCharCallback(it) }
 
 actual inline fun glfwSetCharModsCallback(
     window: GLFWWindow, cbfun: GLFWCharModsCallback?
 ) = GLFW.glfwSetCharModsCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWCharModsCallback(it) }
 
 actual inline fun glfwSetMouseButtonCallback(
     window: GLFWWindow, cbfun: GLFWMouseButtonCallback?
 ) = GLFW.glfwSetMouseButtonCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWMouseButtonCallback(it) }
 
 actual inline fun glfwSetCursorPosCallback(
     window: GLFWWindow, cbfun: GLFWCursorPosCallback?
 ) = GLFW.glfwSetCursorPosCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWCursorPosCallback(it) }
 
 actual inline fun glfwSetCursorEnterCallback(
     window: GLFWWindow, cbfun: GLFWCursorEnterCallback?
 ) = GLFW.glfwSetCursorEnterCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWCursorEnterCallback(it) }
 
 actual inline fun glfwSetScrollCallback(
     window: GLFWWindow, cbfun: GLFWScrollCallback?
 ) = GLFW.glfwSetScrollCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWScrollCallback(it) }
 
 actual inline fun glfwSetDropCallback(
     window: GLFWWindow, cbfun: GLFWDropCallback?
 ) = GLFW.glfwSetDropCallback(
-    window, cbfun
-)
+    window, cbfun?.callback
+)?.let { GLFWDropCallback(it) }
 
 actual inline fun glfwJoystickPresent(
     jid: Int
@@ -886,8 +886,8 @@ actual inline fun glfwJoystickIsGamepad(
 actual inline fun glfwSetJoystickCallback(
     cbfun: GLFWJoystickCallback?
 ) = GLFW.glfwSetJoystickCallback(
-    cbfun
-)
+    cbfun?.callback
+)?.let { GLFWJoystickCallback(it) }
 
 actual inline fun glfwUpdateGamepadMappings(
     string: String
@@ -904,7 +904,7 @@ actual inline fun glfwGetGamepadName(
 actual inline fun glfwGetGamepadState(
     jid: Int, state: GLFWGamepadState
 ) = GLFW.glfwGetGamepadState(
-    jid, state
+    jid, state.struct
 )
 
 actual inline fun glfwSetClipboardString(

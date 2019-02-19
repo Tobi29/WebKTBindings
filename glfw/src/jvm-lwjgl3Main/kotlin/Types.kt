@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,35 +22,22 @@ package net.gitout.ktbindings.glfw
 import net.gitout.ktbindings.utils.ByteReadBuffer
 import net.gitout.ktbindings.utils.FloatReadBuffer
 import org.lwjgl.PointerBuffer
-import org.lwjgl.glfw.GLFWCharCallback
-import org.lwjgl.glfw.GLFWCharModsCallback
-import org.lwjgl.glfw.GLFWCursorEnterCallback
-import org.lwjgl.glfw.GLFWCursorPosCallback
-import org.lwjgl.glfw.GLFWDropCallback
-import org.lwjgl.glfw.GLFWErrorCallback
-import org.lwjgl.glfw.GLFWFramebufferSizeCallback
-import org.lwjgl.glfw.GLFWJoystickCallback
-import org.lwjgl.glfw.GLFWKeyCallback
-import org.lwjgl.glfw.GLFWMonitorCallback
-import org.lwjgl.glfw.GLFWMouseButtonCallback
-import org.lwjgl.glfw.GLFWScrollCallback
-import org.lwjgl.glfw.GLFWWindowCloseCallback
-import org.lwjgl.glfw.GLFWWindowContentScaleCallback
-import org.lwjgl.glfw.GLFWWindowFocusCallback
-import org.lwjgl.glfw.GLFWWindowIconifyCallback
-import org.lwjgl.glfw.GLFWWindowMaximizeCallback
-import org.lwjgl.glfw.GLFWWindowPosCallback
-import org.lwjgl.glfw.GLFWWindowRefreshCallback
-import org.lwjgl.glfw.GLFWWindowSizeCallback
+import org.lwjgl.glfw.GLFWGamepadState as JGLFWGamepadState
+import org.lwjgl.glfw.GLFWGammaRamp as JGLFWGammaRamp
+import org.lwjgl.glfw.GLFWImage as JGLFWImage
+import org.lwjgl.glfw.GLFWVidMode as JGLFWVidMode
 
 actual typealias GLFWMonitor = Long
 
-actual typealias GLFWMonitorBuffer = PointerBuffer
+actual class GLFWMonitorBuffer(
+    @PublishedApi
+    internal val struct: PointerBuffer
+)
 
-actual inline val GLFWMonitorBuffer.size get() = remaining()
+actual inline val GLFWMonitorBuffer.size get() = struct.remaining()
 
 actual inline operator fun GLFWMonitorBuffer.get(index: Int) =
-    get(position() + index)
+    struct.get(struct.position() + index)
 
 actual inline val GLFWMonitor_EMPTY: GLFWMonitor get() = 0L
 
@@ -58,165 +45,403 @@ actual typealias GLFWWindow = Long
 
 actual inline val GLFWWindow_EMPTY: GLFWWindow get() = 0L
 
-actual typealias GLFWVidMode = org.lwjgl.glfw.GLFWVidMode
+actual class GLFWVidMode(
+    @PublishedApi
+    internal val struct: JGLFWVidMode
+)
 
-actual inline val GLFWVidMode.width get() = width()
+actual inline val GLFWVidMode.width get() = struct.width()
 
-actual inline val GLFWVidMode.height get() = height()
+actual inline val GLFWVidMode.height get() = struct.height()
 
-actual inline val GLFWVidMode.refreshRate get() = refreshRate()
+actual inline val GLFWVidMode.refreshRate get() = struct.refreshRate()
 
-actual typealias GLFWVidModeBuffer = org.lwjgl.glfw.GLFWVidMode.Buffer
+actual class GLFWVidModeBuffer(
+    @PublishedApi
+    internal val struct: JGLFWVidMode.Buffer
+)
 
-actual inline val GLFWVidModeBuffer.size get() = remaining()
+actual inline val GLFWVidModeBuffer.size get() = struct.remaining()
 
 actual inline operator fun GLFWVidModeBuffer.get(index: Int) =
-    get(position() + index)
+    GLFWVidMode(struct.get(struct.position() + index))
 
-actual typealias GLFWGammaRamp = org.lwjgl.glfw.GLFWGammaRamp
+actual class GLFWGammaRamp(
+    @PublishedApi
+    internal val struct: JGLFWGammaRamp
+)
 
-actual typealias GLFWGamepadState = org.lwjgl.glfw.GLFWGamepadState
+actual class GLFWGamepadState(
+    @PublishedApi
+    internal val struct: JGLFWGamepadState
+)
 
-actual inline fun GLFWGamepadState() = GLFWGamepadState.create()
+actual inline fun GLFWGamepadState() =
+    GLFWGamepadState(JGLFWGamepadState.create())
 
 actual inline val GLFWGamepadState.axes: FloatReadBuffer
-    get() = FloatReadBuffer(axes())
+    get() = FloatReadBuffer(struct.axes())
 
 actual inline val GLFWGamepadState.buttons: ByteReadBuffer
-    get() = ByteReadBuffer(buttons())
+    get() = ByteReadBuffer(struct.buttons())
 
-actual inline fun GLFWGamepadState.close() = close()
+actual inline fun GLFWGamepadState.close() = struct.close()
 
-actual typealias GLFWImage = org.lwjgl.glfw.GLFWImage
+actual class GLFWImage(
+    @PublishedApi
+    internal val struct: JGLFWImage
+)
 
-actual typealias GLFWImageBuffer = org.lwjgl.glfw.GLFWImage.Buffer
+actual class GLFWImageBuffer(
+    @PublishedApi
+    internal val struct: JGLFWImage.Buffer
+)
 
-actual inline val GLFWImageBuffer.size get() = remaining()
+actual inline val GLFWImageBuffer.size get() = struct.remaining()
 
 actual inline operator fun GLFWImageBuffer.get(index: Int) =
-    get(position() + index)
+    GLFWImage(struct.get(struct.position() + index))
 
 actual typealias GLFWCursor = Long
 
 actual inline val GLFWCursor_EMPTY: GLFWCursor get() = 0L
 
-actual typealias GLFWCharCallback = GLFWCharCallback
+actual class GLFWCharCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWCharCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWCharCallback(
-    noinline callback: (GLFWWindow, Codepoint) -> Unit
-): GLFWCharCallback = GLFWCharCallback.create(callback)
+    crossinline callback: (GLFWWindow, Codepoint) -> Unit
+) = GLFWCharCallback(
+    org.lwjgl.glfw.GLFWCharCallback.create { window, codepoint ->
+        callback(window, codepoint)
+    }
+)
 
-actual typealias GLFWCharModsCallback = GLFWCharModsCallback
+actual class GLFWCharModsCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWCharModsCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWCharModsCallback(
-    noinline callback: (GLFWWindow, Codepoint, Int) -> Unit
-): GLFWCharModsCallback = GLFWCharModsCallback.create(callback)
+    crossinline callback: (GLFWWindow, Codepoint, Int) -> Unit
+) = GLFWCharModsCallback(
+    org.lwjgl.glfw.GLFWCharModsCallback.create { window, codepoint, mods ->
+        callback(window, codepoint, mods)
+    }
+)
 
-actual typealias GLFWCursorEnterCallback = GLFWCursorEnterCallback
+actual class GLFWCursorEnterCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWCursorEnterCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWCursorEnterCallback(
-    noinline callback: (GLFWWindow, Boolean) -> Unit
-): GLFWCursorEnterCallback = GLFWCursorEnterCallback.create(callback)
+    crossinline callback: (GLFWWindow, Boolean) -> Unit
+) = GLFWCursorEnterCallback(
+    org.lwjgl.glfw.GLFWCursorEnterCallback.create { window, entered ->
+        callback(window, entered)
+    }
+)
 
-actual typealias GLFWCursorPosCallback = GLFWCursorPosCallback
+actual class GLFWCursorPosCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWCursorPosCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWCursorPosCallback(
-    noinline callback: (GLFWWindow, Double, Double) -> Unit
-): GLFWCursorPosCallback = GLFWCursorPosCallback.create(callback)
+    crossinline callback: (GLFWWindow, Double, Double) -> Unit
+) = GLFWCursorPosCallback(
+    org.lwjgl.glfw.GLFWCursorPosCallback.create { window, xpos, ypos ->
+        callback(window, xpos, ypos)
+    }
+)
 
-actual typealias GLFWDropCallback = GLFWDropCallback
+actual class GLFWDropCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWDropCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWDropCallback(
-    noinline callback: (GLFWWindow, Int, Long) -> Unit
-): GLFWDropCallback = GLFWDropCallback.create(callback)
+    crossinline callback: (GLFWWindow, Int, Long) -> Unit
+) = GLFWDropCallback(
+    org.lwjgl.glfw.GLFWDropCallback.create { window, count, names ->
+        callback(window, count, names)
+    }
+)
 
-actual typealias GLFWErrorCallback = GLFWErrorCallback
+actual class GLFWErrorCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWErrorCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWErrorCallback(
-    noinline callback: (Int, Long) -> Unit
-): GLFWErrorCallback = GLFWErrorCallback.create(callback)
+    crossinline callback: (Int, Long) -> Unit
+) = GLFWErrorCallback(
+    org.lwjgl.glfw.GLFWErrorCallback.create { error, description ->
+        callback(error, description)
+    }
+)
 
-actual typealias GLFWFramebufferSizeCallback = GLFWFramebufferSizeCallback
+actual class GLFWFramebufferSizeCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWFramebufferSizeCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWFramebufferSizeCallback(
-    noinline callback: (GLFWWindow, Int, Int) -> Unit
-): GLFWFramebufferSizeCallback = GLFWFramebufferSizeCallback.create(callback)
+    crossinline callback: (GLFWWindow, Int, Int) -> Unit
+) = GLFWFramebufferSizeCallback(
+    org.lwjgl.glfw.GLFWFramebufferSizeCallback.create { window, count, names ->
+        callback(window, count, names)
+    }
+)
 
-actual typealias GLFWJoystickCallback = GLFWJoystickCallback
+actual class GLFWJoystickCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWJoystickCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWJoystickCallback(
-    noinline callback: (Int, Int) -> Unit
-): GLFWJoystickCallback = GLFWJoystickCallback.create(callback)
+    crossinline callback: (Int, Int) -> Unit
+) = GLFWJoystickCallback(
+    org.lwjgl.glfw.GLFWJoystickCallback.create { jid, event ->
+        callback(jid, event)
+    }
+)
 
-actual typealias GLFWKeyCallback = GLFWKeyCallback
+actual class GLFWKeyCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWKeyCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWKeyCallback(
-    noinline callback: (GLFWWindow, Int, Int, Int, Int) -> Unit
-): GLFWKeyCallback = GLFWKeyCallback.create(callback)
+    crossinline callback: (GLFWWindow, Int, Int, Int, Int) -> Unit
+) = GLFWKeyCallback(
+    org.lwjgl.glfw.GLFWKeyCallback.create { window, key, scancode, action, mods ->
+        callback(window, key, scancode, action, mods)
+    }
+)
 
-actual typealias GLFWMonitorCallback = GLFWMonitorCallback
+actual class GLFWMonitorCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWMonitorCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWMonitorCallback(
-    noinline callback: (GLFWMonitor, Int) -> Unit
-): GLFWMonitorCallback = GLFWMonitorCallback.create(callback)
+    crossinline callback: (GLFWMonitor, Int) -> Unit
+) = GLFWMonitorCallback(
+    org.lwjgl.glfw.GLFWMonitorCallback.create { monitor, event ->
+        callback(monitor, event)
+    }
+)
 
-actual typealias GLFWMouseButtonCallback = GLFWMouseButtonCallback
+actual class GLFWMouseButtonCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWMouseButtonCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWMouseButtonCallback(
-    noinline callback: (GLFWWindow, Int, Int, Int) -> Unit
-): GLFWMouseButtonCallback = GLFWMouseButtonCallback.create(callback)
+    crossinline callback: (GLFWWindow, Int, Int, Int) -> Unit
+) = GLFWMouseButtonCallback(
+    org.lwjgl.glfw.GLFWMouseButtonCallback.create { window, button, action, mods ->
+        callback(window, button, action, mods)
+    }
+)
 
-actual typealias GLFWScrollCallback = GLFWScrollCallback
+actual class GLFWScrollCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWScrollCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWScrollCallback(
-    noinline callback: (GLFWWindow, Double, Double) -> Unit
-): GLFWScrollCallback = GLFWScrollCallback.create(callback)
+    crossinline callback: (GLFWWindow, Double, Double) -> Unit
+) = GLFWScrollCallback(
+    org.lwjgl.glfw.GLFWScrollCallback.create { window, count, names ->
+        callback(window, count, names)
+    }
+)
 
-actual typealias GLFWWindowCloseCallback = GLFWWindowCloseCallback
+actual class GLFWWindowCloseCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWWindowCloseCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWWindowCloseCallback(
-    noinline callback: (GLFWWindow) -> Unit
-): GLFWWindowCloseCallback = GLFWWindowCloseCallback.create(callback)
+    crossinline callback: (GLFWWindow) -> Unit
+) = GLFWWindowCloseCallback(
+    org.lwjgl.glfw.GLFWWindowCloseCallback.create { window ->
+        callback(window)
+    }
+)
 
-actual typealias GLFWWindowContentScaleCallback = GLFWWindowContentScaleCallback
+actual class GLFWWindowContentScaleCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWWindowContentScaleCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWWindowContentScaleCallback(
-    noinline callback: (GLFWWindow, Float, Float) -> Unit
-): GLFWWindowContentScaleCallback =
-    GLFWWindowContentScaleCallback.create(callback)
+    crossinline callback: (GLFWWindow, Float, Float) -> Unit
+) = GLFWWindowContentScaleCallback(
+    org.lwjgl.glfw.GLFWWindowContentScaleCallback.create { window, xscale, yscale ->
+        callback(window, xscale, yscale)
+    }
+)
 
-actual typealias GLFWWindowFocusCallback = GLFWWindowFocusCallback
+actual class GLFWWindowFocusCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWWindowFocusCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWWindowFocusCallback(
-    noinline callback: (GLFWWindow, Boolean) -> Unit
-): GLFWWindowFocusCallback = GLFWWindowFocusCallback.create(callback)
+    crossinline callback: (GLFWWindow, Boolean) -> Unit
+) = GLFWWindowFocusCallback(
+    org.lwjgl.glfw.GLFWWindowFocusCallback.create { window, focused ->
+        callback(window, focused)
+    }
+)
 
-actual typealias GLFWWindowIconifyCallback = GLFWWindowIconifyCallback
+actual class GLFWWindowIconifyCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWWindowIconifyCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWWindowIconifyCallback(
-    noinline callback: (GLFWWindow, Boolean) -> Unit
-): GLFWWindowIconifyCallback = GLFWWindowIconifyCallback.create(callback)
+    crossinline callback: (GLFWWindow, Boolean) -> Unit
+) = GLFWWindowIconifyCallback(
+    org.lwjgl.glfw.GLFWWindowIconifyCallback.create { window, iconified ->
+        callback(window, iconified)
+    }
+)
 
-actual typealias GLFWWindowMaximizeCallback = GLFWWindowMaximizeCallback
+actual class GLFWWindowMaximizeCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWWindowMaximizeCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWWindowMaximizeCallback(
-    noinline callback: (GLFWWindow, Boolean) -> Unit
-): GLFWWindowMaximizeCallback = GLFWWindowMaximizeCallback.create(callback)
+    crossinline callback: (GLFWWindow, Boolean) -> Unit
+) = GLFWWindowMaximizeCallback(
+    org.lwjgl.glfw.GLFWWindowMaximizeCallback.create { window, maximized ->
+        callback(window, maximized)
+    }
+)
 
-actual typealias GLFWWindowPosCallback = GLFWWindowPosCallback
+actual class GLFWWindowPosCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWWindowPosCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWWindowPosCallback(
-    noinline callback: (GLFWWindow, Int, Int) -> Unit
-): GLFWWindowPosCallback = GLFWWindowPosCallback.create(callback)
+    crossinline callback: (GLFWWindow, Int, Int) -> Unit
+) = GLFWWindowPosCallback(
+    org.lwjgl.glfw.GLFWWindowPosCallback.create { window, xpos, ypos ->
+        callback(window, xpos, ypos)
+    }
+)
 
-actual typealias GLFWWindowRefreshCallback = GLFWWindowRefreshCallback
+actual class GLFWWindowRefreshCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWWindowRefreshCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWWindowRefreshCallback(
-    noinline callback: (GLFWWindow) -> Unit
-): GLFWWindowRefreshCallback = GLFWWindowRefreshCallback.create(callback)
+    crossinline callback: (GLFWWindow) -> Unit
+) = GLFWWindowRefreshCallback(
+    org.lwjgl.glfw.GLFWWindowRefreshCallback.create { window ->
+        callback(window)
+    }
+)
 
-actual typealias GLFWWindowSizeCallback = GLFWWindowSizeCallback
+actual class GLFWWindowSizeCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.glfw.GLFWWindowSizeCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
 
 actual inline fun GLFWWindowSizeCallback(
-    noinline callback: (GLFWWindow, Int, Int) -> Unit
-): GLFWWindowSizeCallback = GLFWWindowSizeCallback.create(callback)
+    crossinline callback: (GLFWWindow, Int, Int) -> Unit
+) = GLFWWindowSizeCallback(
+    org.lwjgl.glfw.GLFWWindowSizeCallback.create { window, width, height ->
+        callback(window, width, height)
+    }
+)

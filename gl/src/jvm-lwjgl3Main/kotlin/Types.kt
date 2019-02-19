@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ package net.gitout.ktbindings.gl
 
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GLCapabilities
+import org.lwjgl.system.MemoryUtil
 
 actual abstract class GL11 internal constructor() {
     @PublishedApi
@@ -117,3 +118,26 @@ actual inline val emptyGLVertexArrayObject: GLVertexArrayObject get() = 0
 actual typealias GLUniformLocation = Int
 
 actual inline val emptyGLUniformLocation: GLUniformLocation get() = Int.MAX_VALUE
+
+actual class GLDebugMessageCallback @PublishedApi internal constructor(
+    @PublishedApi
+    internal val callback: org.lwjgl.opengl.GLDebugMessageCallback
+) {
+    actual fun close() {
+        callback.close()
+    }
+}
+
+actual inline fun GLDebugMessageCallback(
+    crossinline callback: (
+        source: GLenum, type: GLenum, id: GLuint, severity: GLenum,
+        message: String?
+    ) -> Unit
+) = GLDebugMessageCallback(
+    org.lwjgl.opengl.GLDebugMessageCallback.create { source, type, id, severity,
+                                                     length, message, _ ->
+        val messageBuffer = MemoryUtil.memByteBufferSafe(message, length)
+        val messageString = messageBuffer?.let { MemoryUtil.memUTF8(it) }
+        callback(source, type, id.toUInt(), severity, messageString)
+    }
+)

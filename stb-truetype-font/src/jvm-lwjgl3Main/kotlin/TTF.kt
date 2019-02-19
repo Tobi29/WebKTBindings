@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,7 +84,8 @@ actual inline fun stbtt_BakeFontBitmap(
 ) = data.read { buffer ->
     pixels.write { bufferPixels ->
         STBTruetype.stbtt_BakeFontBitmap(
-            buffer, pixel_height, bufferPixels, pw, ph, first_char, chardata
+            buffer, pixel_height, bufferPixels, pw, ph, first_char,
+            chardata.struct
         )
     }
 }
@@ -94,7 +95,7 @@ actual inline fun stbtt_GetBakedQuad(
     xpos: FloatArray, ypos: FloatArray, q: STBTTAlignedQuad,
     opengl_fillrule: Boolean
 ) = STBTruetype.stbtt_GetBakedQuad(
-    chardata, pw, ph, char_index, xpos, ypos, q, opengl_fillrule
+    chardata.struct, pw, ph, char_index, xpos, ypos, q.struct, opengl_fillrule
 )
 
 actual inline fun stbtt_PackBegin(
@@ -102,7 +103,8 @@ actual inline fun stbtt_PackBegin(
     stride_in_bytes: Int, padding: Int, alloc_context: Long
 ) = pixels.writeOrNull { buffer ->
     STBTruetype.stbtt_PackBegin(
-        spc, buffer, width, height, stride_in_bytes, padding, alloc_context
+        spc.struct, buffer, width, height, stride_in_bytes, padding,
+        alloc_context
     )
 }
 
@@ -111,14 +113,14 @@ actual inline fun stbtt_PackBegin(
     stride_in_bytes: Int, padding: Int
 ) = pixels.writeOrNull { buffer ->
     STBTruetype.stbtt_PackBegin(
-        spc, buffer, width, height, stride_in_bytes, padding
+        spc.struct, buffer, width, height, stride_in_bytes, padding
     )
 }
 
 actual inline fun stbtt_PackEnd(
     spc: STBTTPackContext
 ) = STBTruetype.stbtt_PackEnd(
-    spc
+    spc.struct
 )
 
 actual inline fun stbtt_point_size(
@@ -133,8 +135,8 @@ actual inline fun stbtt_PackFontRange(
     chardata_for_range: STBTTPackedcharBuffer
 ) = fontdata.read { buffer ->
     STBTruetype.stbtt_PackFontRange(
-        spc, buffer, font_index, font_size, first_unicode_char_in_range,
-        chardata_for_range
+        spc.struct, buffer, font_index, font_size, first_unicode_char_in_range,
+        chardata_for_range.struct
     )
 }
 
@@ -143,14 +145,14 @@ actual inline fun stbtt_PackFontRanges(
     ranges: STBTTPackRangeBuffer
 ) = fontdata.read { buffer ->
     STBTruetype.stbtt_PackFontRanges(
-        spc, buffer, font_index, ranges
+        spc.struct, buffer, font_index, ranges.struct
     )
 }
 
 actual inline fun stbtt_PackSetOversampling(
     spc: STBTTPackContext, h_oversample: Int, v_oversample: Int
 ) = STBTruetype.stbtt_PackSetOversampling(
-    spc, h_oversample, v_oversample
+    spc.struct, h_oversample, v_oversample
 )
 
 actual inline fun stbtt_GetPackedQuad(
@@ -158,27 +160,27 @@ actual inline fun stbtt_GetPackedQuad(
     xpos: FloatArray, ypos: FloatArray, q: STBTTAlignedQuad,
     align_to_integer: Boolean
 ) = STBTruetype.stbtt_GetPackedQuad(
-    chardata, pw, ph, char_index, xpos, ypos, q, align_to_integer
+    chardata.struct, pw, ph, char_index, xpos, ypos, q.struct, align_to_integer
 )
 
 actual inline fun stbtt_PackFontRangesGatherRects(
     spc: STBTTPackContext, info: STBTTFontinfo, ranges: STBTTPackRangeBuffer,
     rects: STBRPRectBuffer
 ) = STBTruetype.stbtt_PackFontRangesGatherRects(
-    spc, info, ranges, rects
+    spc.struct, info.struct, ranges.struct, rects.struct
 )
 
 actual inline fun stbtt_PackFontRangesPackRects(
     spc: STBTTPackContext, rects: STBRPRectBuffer
 ) = STBTruetype.stbtt_PackFontRangesPackRects(
-    spc, rects
+    spc.struct, rects.struct
 )
 
 actual inline fun stbtt_PackFontRangesRenderIntoRects(
     spc: STBTTPackContext, info: STBTTFontinfo, ranges: STBTTPackRangeBuffer,
     rects: STBRPRectBuffer
 ) = STBTruetype.stbtt_PackFontRangesRenderIntoRects(
-    spc, info, ranges, rects
+    spc.struct, info.struct, ranges.struct, rects.struct
 )
 
 actual inline fun stbtt_GetNumberOfFonts(
@@ -200,115 +202,115 @@ actual inline fun stbtt_GetFontOffsetForIndex(
 actual inline fun stbtt_InitFont(
     info: STBTTFontinfo, data: DataBufferPinned, offset: Int
 ) = STBTruetype.stbtt_InitFont(
-    info, data.buffer, offset
+    info.struct, data.buffer, offset
 )
 
 actual inline fun stbtt_InitFont(
     info: STBTTFontinfo, data: DataBufferPinned
 ) = STBTruetype.stbtt_InitFont(
-    info, data.buffer
+    info.struct, data.buffer
 )
 
 actual inline fun stbtt_FindGlyphIndex(
     info: STBTTFontinfo, unicode_codepoint: Int
 ) = STBTruetype.stbtt_FindGlyphIndex(
-    info, unicode_codepoint
+    info.struct, unicode_codepoint
 )
 
 actual inline fun stbtt_ScaleForPixelHeight(
     info: STBTTFontinfo, pixels: Float
 ) = STBTruetype.stbtt_ScaleForPixelHeight(
-    info, pixels
+    info.struct, pixels
 )
 
 actual inline fun stbtt_ScaleForMappingEmToPixels(
     info: STBTTFontinfo, pixels: Float
 ) = STBTruetype.stbtt_ScaleForMappingEmToPixels(
-    info, pixels
+    info.struct, pixels
 )
 
 actual inline fun stbtt_GetFontVMetrics(
     info: STBTTFontinfo, ascent: IntArray?, descent: IntArray?,
     lineGap: IntArray?
 ) = STBTruetype.stbtt_GetFontVMetrics(
-    info, ascent, descent, lineGap
+    info.struct, ascent, descent, lineGap
 )
 
 actual inline fun stbtt_GetFontVMetricsOS2(
     info: STBTTFontinfo, typoAscent: IntArray?, typoDescent: IntArray?,
     typoLineGap: IntArray?
 ) = STBTruetype.stbtt_GetFontVMetricsOS2(
-    info, typoAscent, typoDescent, typoLineGap
+    info.struct, typoAscent, typoDescent, typoLineGap
 )
 
 actual inline fun stbtt_GetFontBoundingBox(
     info: STBTTFontinfo, x0: IntArray, y0: IntArray, x1: IntArray, y1: IntArray
 ) = STBTruetype.stbtt_GetFontBoundingBox(
-    info, x0, y0, x1, y1
+    info.struct, x0, y0, x1, y1
 )
 
 actual inline fun stbtt_GetCodepointHMetrics(
     info: STBTTFontinfo, codepoint: Int, advanceWidth: IntArray?,
     leftSideBearing: IntArray?
 ) = STBTruetype.stbtt_GetCodepointHMetrics(
-    info, codepoint, advanceWidth, leftSideBearing
+    info.struct, codepoint, advanceWidth, leftSideBearing
 )
 
 actual inline fun stbtt_GetCodepointKernAdvance(
     info: STBTTFontinfo, ch1: Int, ch2: Int
 ) = STBTruetype.stbtt_GetCodepointKernAdvance(
-    info, ch1, ch2
+    info.struct, ch1, ch2
 )
 
 actual inline fun stbtt_GetCodepointBox(
     info: STBTTFontinfo, codepoint: Int, x0: IntArray?, y0: IntArray?,
     x1: IntArray?, y1: IntArray?
 ) = STBTruetype.stbtt_GetCodepointBox(
-    info, codepoint, x0, y0, x1, y1
+    info.struct, codepoint, x0, y0, x1, y1
 )
 
 actual inline fun stbtt_GetGlyphHMetrics(
     info: STBTTFontinfo, glyph_index: Int, advanceWidth: IntArray?,
     leftSideBearing: IntArray?
 ) = STBTruetype.stbtt_GetGlyphHMetrics(
-    info, glyph_index, advanceWidth, leftSideBearing
+    info.struct, glyph_index, advanceWidth, leftSideBearing
 )
 
 actual inline fun stbtt_GetGlyphKernAdvance(
     info: STBTTFontinfo, glyph1: Int, glyph2: Int
 ) = STBTruetype.stbtt_GetGlyphKernAdvance(
-    info, glyph1, glyph2
+    info.struct, glyph1, glyph2
 )
 
 actual inline fun stbtt_GetGlyphBox(
     info: STBTTFontinfo, glyph_index: Int, x0: IntArray?, y0: IntArray?,
     x1: IntArray?, y1: IntArray?
 ) = STBTruetype.stbtt_GetGlyphBox(
-    info, glyph_index, x0, y0, x1, y1
+    info.struct, glyph_index, x0, y0, x1, y1
 )
 
 actual inline fun stbtt_IsGlyphEmpty(
     info: STBTTFontinfo, glyph_index: Int
 ) = STBTruetype.stbtt_IsGlyphEmpty(
-    info, glyph_index
+    info.struct, glyph_index
 )
 
 actual inline fun stbtt_GetCodepointShape(
     info: STBTTFontinfo, unicode_codepoint: Int
 ) = STBTruetype.stbtt_GetCodepointShape(
-    info, unicode_codepoint
-)
+    info.struct, unicode_codepoint
+)?.let { STBTTVertexBuffer(it) }
 
 actual inline fun stbtt_GetGlyphShape(
     info: STBTTFontinfo, glyph_index: Int
 ) = STBTruetype.stbtt_GetGlyphShape(
-    info, glyph_index
-)
+    info.struct, glyph_index
+)?.let { STBTTVertexBuffer(it) }
 
 actual inline fun stbtt_FreeShape(
     info: STBTTFontinfo, vertices: STBTTVertexBuffer
 ) = STBTruetype.stbtt_FreeShape(
-    info, vertices
+    info.struct, vertices.struct
 )
 
 actual inline fun stbtt_FreeBitmap(
@@ -327,7 +329,7 @@ actual inline fun stbtt_GetCodepointBitmap(
     info: STBTTFontinfo, scale_x: Float, scale_y: Float, codepoint: Int,
     width: IntArray, height: IntArray, xoff: IntArray?, yoff: IntArray?
 ) = STBTruetype.stbtt_GetCodepointBitmap(
-    info, scale_x, scale_y, codepoint, width, height, xoff, yoff
+    info.struct, scale_x, scale_y, codepoint, width, height, xoff, yoff
 )?.let { STBDataBuffer(it) }
 
 actual inline fun stbtt_GetCodepointBitmapSubpixel(
@@ -335,8 +337,8 @@ actual inline fun stbtt_GetCodepointBitmapSubpixel(
     shift_y: Float, codepoint: Int, width: IntArray, height: IntArray,
     xoff: IntArray?, yoff: IntArray?
 ) = STBTruetype.stbtt_GetCodepointBitmapSubpixel(
-    info, scale_x, scale_y, shift_x, shift_y, codepoint, width, height, xoff,
-    yoff
+    info.struct, scale_x, scale_y, shift_x, shift_y, codepoint, width, height,
+    xoff, yoff
 )?.let { STBDataBuffer(it) }
 
 actual inline fun stbtt_MakeCodepointBitmap(
@@ -344,7 +346,8 @@ actual inline fun stbtt_MakeCodepointBitmap(
     out_stride: Int, scale_x: Float, scale_y: Float, codepoint: Int
 ) = output.write { buffer ->
     STBTruetype.stbtt_MakeCodepointBitmap(
-        info, buffer, out_w, out_h, out_stride, scale_x, scale_y, codepoint
+        info.struct, buffer, out_w, out_h, out_stride, scale_x, scale_y,
+        codepoint
     )
 }
 
@@ -354,8 +357,8 @@ actual inline fun stbtt_MakeCodepointBitmapSubpixel(
     shift_y: Float, codepoint: Int
 ) = output.write { buffer ->
     STBTruetype.stbtt_MakeCodepointBitmapSubpixel(
-        info, buffer, out_w, out_h, out_stride, scale_x, scale_y, shift_x,
-        shift_y, codepoint
+        info.struct, buffer, out_w, out_h, out_stride, scale_x, scale_y,
+        shift_x, shift_y, codepoint
     )
 }
 
@@ -366,8 +369,8 @@ actual inline fun stbtt_MakeCodepointBitmapSubpixelPrefilter(
     sub_y: FloatArray, codepoint: Int
 ) = output.write { buffer ->
     STBTruetype.stbtt_MakeCodepointBitmapSubpixelPrefilter(
-        info, buffer, out_w, out_h, out_stride, scale_x, scale_y, shift_x,
-        shift_y, oversample_x, oversample_y, sub_x, sub_y, codepoint
+        info.struct, buffer, out_w, out_h, out_stride, scale_x, scale_y,
+        shift_x, shift_y, oversample_x, oversample_y, sub_x, sub_y, codepoint
     )
 }
 
@@ -375,7 +378,7 @@ actual inline fun stbtt_GetCodepointBitmapBox(
     font: STBTTFontinfo, codepoint: Int, scale_x: Float, scale_y: Float,
     ix0: IntArray?, iy0: IntArray?, ix1: IntArray?, iy1: IntArray?
 ) = STBTruetype.stbtt_GetCodepointBitmapBox(
-    font, codepoint, scale_x, scale_y, ix0, iy0, ix1, iy1
+    font.struct, codepoint, scale_x, scale_y, ix0, iy0, ix1, iy1
 )
 
 actual inline fun stbtt_GetCodepointBitmapBoxSubpixel(
@@ -383,14 +386,15 @@ actual inline fun stbtt_GetCodepointBitmapBoxSubpixel(
     shift_x: Float, shift_y: Float, ix0: IntArray?, iy0: IntArray?,
     ix1: IntArray?, iy1: IntArray?
 ) = STBTruetype.stbtt_GetCodepointBitmapBoxSubpixel(
-    font, codepoint, scale_x, scale_y, shift_x, shift_y, ix0, iy0, ix1, iy1
+    font.struct, codepoint, scale_x, scale_y, shift_x, shift_y, ix0, iy0, ix1,
+    iy1
 )
 
 actual inline fun stbtt_GetGlyphBitmap(
     info: STBTTFontinfo, scale_x: Float, scale_y: Float, glyph: Int,
     width: IntArray, height: IntArray, xoff: IntArray?, yoff: IntArray?
 ) = STBTruetype.stbtt_GetGlyphBitmap(
-    info, scale_x, scale_y, glyph, width, height, xoff, yoff
+    info.struct, scale_x, scale_y, glyph, width, height, xoff, yoff
 )?.let { STBDataBuffer(it) }
 
 actual inline fun stbtt_GetGlyphBitmapSubpixel(
@@ -398,7 +402,8 @@ actual inline fun stbtt_GetGlyphBitmapSubpixel(
     shift_y: Float, glyph: Int, width: IntArray, height: IntArray,
     xoff: IntArray?, yoff: IntArray?
 ) = STBTruetype.stbtt_GetGlyphBitmapSubpixel(
-    info, scale_x, scale_y, shift_x, shift_y, glyph, width, height, xoff, yoff
+    info.struct, scale_x, scale_y, shift_x, shift_y, glyph, width, height, xoff,
+    yoff
 )?.let { STBDataBuffer(it) }
 
 actual inline fun stbtt_MakeGlyphBitmap(
@@ -406,7 +411,7 @@ actual inline fun stbtt_MakeGlyphBitmap(
     out_stride: Int, scale_x: Float, scale_y: Float, glyph: Int
 ) = output.write { buffer ->
     STBTruetype.stbtt_MakeGlyphBitmap(
-        info, buffer, out_w, out_h, out_stride, scale_x, scale_y, glyph
+        info.struct, buffer, out_w, out_h, out_stride, scale_x, scale_y, glyph
     )
 }
 
@@ -416,8 +421,8 @@ actual inline fun stbtt_MakeGlyphBitmapSubpixel(
     shift_y: Float, glyph: Int
 ) = output.write { buffer ->
     STBTruetype.stbtt_MakeGlyphBitmapSubpixel(
-        info, buffer, out_w, out_h, out_stride, scale_x, scale_y, shift_x,
-        shift_y, glyph
+        info.struct, buffer, out_w, out_h, out_stride, scale_x, scale_y,
+        shift_x, shift_y, glyph
     )
 }
 
@@ -428,8 +433,8 @@ actual inline fun stbtt_MakeGlyphBitmapSubpixelPrefilter(
     sub_y: FloatArray, glyph: Int
 ) = output.write { buffer ->
     STBTruetype.stbtt_MakeGlyphBitmapSubpixelPrefilter(
-        info, buffer, out_w, out_h, out_stride, scale_x, scale_y, shift_x,
-        shift_y, oversample_x, oversample_y, sub_x, sub_y, glyph
+        info.struct, buffer, out_w, out_h, out_stride, scale_x, scale_y,
+        shift_x, shift_y, oversample_x, oversample_y, sub_x, sub_y, glyph
     )
 }
 
@@ -437,7 +442,7 @@ actual inline fun stbtt_GetGlyphBitmapBox(
     font: STBTTFontinfo, glyph: Int, scale_x: Float, scale_y: Float,
     ix0: IntArray?, iy0: IntArray?, ix1: IntArray?, iy1: IntArray?
 ) = STBTruetype.stbtt_GetGlyphBitmapBox(
-    font, glyph, scale_x, scale_y, ix0, iy0, ix1, iy1
+    font.struct, glyph, scale_x, scale_y, ix0, iy0, ix1, iy1
 )
 
 actual inline fun stbtt_GetGlyphBitmapBoxSubpixel(
@@ -445,7 +450,7 @@ actual inline fun stbtt_GetGlyphBitmapBoxSubpixel(
     shift_x: Float, shift_y: Float, ix0: IntArray?, iy0: IntArray?,
     ix1: IntArray?, iy1: IntArray?
 ) = STBTruetype.stbtt_GetGlyphBitmapBoxSubpixel(
-    font, glyph, scale_x, scale_y, shift_x, shift_y, ix0, iy0, ix1, iy1
+    font.struct, glyph, scale_x, scale_y, shift_x, shift_y, ix0, iy0, ix1, iy1
 )
 
 actual inline fun stbtt_Rasterize(
@@ -453,8 +458,8 @@ actual inline fun stbtt_Rasterize(
     scale_x: Float, scale_y: Float, shift_x: Float, shift_y: Float, x_off: Int,
     y_off: Int, invert: Boolean
 ) = STBTruetype.stbtt_Rasterize(
-    result, flatness_in_pixels, vertices, scale_x, scale_y, shift_x, shift_y,
-    x_off, y_off, invert
+    result.struct, flatness_in_pixels, vertices.struct, scale_x, scale_y,
+    shift_x, shift_y, x_off, y_off, invert
 )
 
 actual inline fun stbtt_FreeSDF(
@@ -474,8 +479,8 @@ actual inline fun stbtt_GetGlyphSDF(
     onedge_value: Byte, pixel_dist_scale: Float, width: IntArray,
     height: IntArray, xoff: IntArray, yoff: IntArray
 ) = STBTruetype.stbtt_GetGlyphSDF(
-    font, scale, glyph, padding, onedge_value, pixel_dist_scale, width, height,
-    xoff, yoff
+    font.struct, scale, glyph, padding, onedge_value, pixel_dist_scale, width,
+    height, xoff, yoff
 )?.let { STBDataBuffer(it) }
 
 actual inline fun stbtt_GetCodepointSDF(
@@ -483,8 +488,8 @@ actual inline fun stbtt_GetCodepointSDF(
     onedge_value: Byte, pixel_dist_scale: Float, width: IntArray,
     height: IntArray, xoff: IntArray, yoff: IntArray
 ) = STBTruetype.stbtt_GetCodepointSDF(
-    font, scale, codepoint, padding, onedge_value, pixel_dist_scale, width,
-    height, xoff, yoff
+    font.struct, scale, codepoint, padding, onedge_value, pixel_dist_scale,
+    width, height, xoff, yoff
 )?.let { STBDataBuffer(it) }
 
 actual inline fun stbtt_FindMatchingFont(
@@ -509,5 +514,5 @@ actual inline fun stbtt_GetFontNameString(
     font: STBTTFontinfo, platformID: Int, encodingID: Int, languageID: Int,
     nameID: Int
 ) = STBTruetype.stbtt_GetFontNameString(
-    font, platformID, encodingID, languageID, nameID
+    font.struct, platformID, encodingID, languageID, nameID
 )?.let { STBDataBuffer(it) }
