@@ -23,6 +23,22 @@ configurations {
     compileClasspath
 }
 
+publishing {
+    publications.each {
+        it.pom {
+            name = "KT Bindings"
+            description = "Multiplatform Kotlin bindings for game related apis"
+            url = "https://github.com/Tobi29/kt-bindings"
+            licenses {
+                license {
+                    name = "The Apache License, Version 2.0"
+                    url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                }
+            }
+        }
+    }
+}
+
 if (extensions.findByName("android") != null) {
     apply plugin: "digital.wup.android-maven-publish"
 

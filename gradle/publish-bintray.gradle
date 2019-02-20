@@ -23,33 +23,15 @@ if (bintrayUser == null || bintrayKey == null) {
     return
 }
 
-apply plugin: "com.jfrog.bintray"
-
-bintray {
-    user = bintrayUser
-    key = bintrayKey
-
-    pkg {
-        repo = "scapes-engine"
-        name = "kt-bindings"
-        licenses = ["Apache-2.0"]
-        websiteUrl = "https://github.com/Tobi29/kt-bindings"
-        issueTrackerUrl = "https://github.com/Tobi29/kt-bindings/issues"
-        githubRepo = "Tobi29/kt-bindings"
-        vcsUrl = "https://github.com/Tobi29/kt-bindings.git"
-        version {
-            name = project.version
-            vcsTag = project.version
-        }
-    }
-
-    // FIXME: This is really hacky
-    afterEvaluate {
-        afterEvaluate {
-            publications = publishing.publications.collect { it.name }
-                    .findAll { it != "kotlinMultiplatform" }
+publishing {
+    repositories {
+        maven {
+            name = "bintray"
+            url = "https://api.bintray.com/maven/$bintrayUser/scapes-engine/kt-bindings"
+            credentials {
+                username = bintrayUser
+                password = bintrayKey
+            }
         }
     }
 }
-
-tasks.findByName("publish")?.dependsOn("bintrayUpload")
