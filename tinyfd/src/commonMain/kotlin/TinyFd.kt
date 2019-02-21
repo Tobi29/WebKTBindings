@@ -18,9 +18,9 @@ package net.gitout.ktbindings.tinyfd
 
 expect val tinyfd_version: String
 expect val tinyfd_needs: String
-expect val tinyfd_verbose: Boolean
-expect val tinyfd_silent: Boolean
-expect val tinyfd_forceConsole: Boolean
+expect var tinyfd_verbose: Boolean
+expect var tinyfd_silent: Boolean
+expect var tinyfd_forceConsole: Boolean
 
 expect fun tinyfd_response(
 ): String

@@ -25,12 +25,27 @@ actual inline val tinyfd_version
     get() = JTinyFd.tinyfd_version
 actual inline val tinyfd_needs
     get() = JTinyFd.tinyfd_needs
-actual inline val tinyfd_verbose
+actual inline var tinyfd_verbose
     get() = JTinyFd.tinyfd_verbose[JTinyFd.tinyfd_verbose.position()] != 0
-actual inline val tinyfd_silent
+    set(value) {
+        JTinyFd.tinyfd_verbose.put(
+            JTinyFd.tinyfd_verbose.position(), if (value) 1 else 0
+        )
+    }
+actual inline var tinyfd_silent
     get() = JTinyFd.tinyfd_silent[JTinyFd.tinyfd_silent.position()] != 0
-actual inline val tinyfd_forceConsole
+    set(value) {
+        JTinyFd.tinyfd_silent.put(
+            JTinyFd.tinyfd_silent.position(), if (value) 1 else 0
+        )
+    }
+actual inline var tinyfd_forceConsole
     get() = JTinyFd.tinyfd_forceConsole[JTinyFd.tinyfd_forceConsole.position()] != 0
+    set(value) {
+        JTinyFd.tinyfd_forceConsole.put(
+            JTinyFd.tinyfd_forceConsole.position(), if (value) 1 else 0
+        )
+    }
 
 actual inline fun tinyfd_response(
 ) = JTinyFd.tinyfd_response(
