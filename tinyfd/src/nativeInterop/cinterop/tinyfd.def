@@ -1,0 +1,6 @@
+compilerOpts = -std=c11
+
+headerFilter = tinyfd/**
+
+---
+#include <tinyfd/tinyfiledialogs.c>

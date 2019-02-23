@@ -32,9 +32,34 @@ kotlin {
                 implementation rootProject.lwjglJVM("lwjgl-tinyfd")
             }
         }
+        nativeMain {
+            dependsOn commonMain
+        }
+        nativeTest {
+            dependsOn commonTest
+        }
+        configure([nativeLinuxX64Main, nativeLinuxArm32HfpMain]) {
+            dependsOn nativeMain
+        }
+        configure([nativeLinuxX64Test, nativeLinuxArm32HfpTest]) {
+            dependsOn nativeTest
+        }
     }
     targets {
         // Kotlin/JVM (LWJGL 3)
         fromPreset(presets.jvm, "jvm-lwjgl3")
+
+        // Kotlin/Native
+        fromPreset(presets.linuxX64, "nativeLinuxX64")
+        fromPreset(presets.linuxArm32Hfp, "nativeLinuxArm32Hfp")
+        configure([nativeLinuxX64, nativeLinuxArm32Hfp]) {
+            compilations.main.cinterops {
+                tinyfd {
+                    packageName "binding.tinyfd"
+                    includeDirs file("ext")
+                    includeDirs file("/usr/include")
+                }
+            }
+        }
     }
 }

@@ -1,0 +1,21 @@
+compilerOpts = -std=c11
+
+linkerOpts.linux = -L/usr/lib -lGL
+
+---
+#if defined __APPLE__
+
+// Uses official platform library
+
+#elif defined __unix__
+
+#define GL_GLEXT_PROTOTYPES
+#include <GL/glcorearb.h>
+
+#elif defined _WIN32
+
+#error TODO
+
+#else
+#error Unsupported platform
+#endif

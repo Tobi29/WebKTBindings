@@ -1,0 +1,9 @@
+compilerOpts = -std=c11
+
+headers = glfwstatic.h
+headerFilter = GLFW/**
+
+linkerOpts.linux = -L/usr/lib -lX11
+
+compilerOpts.osx = -ObjC
+linkerOpts.osx = -framework Cocoa -framework IOKit -framework CoreFoundation -framework CoreVideo

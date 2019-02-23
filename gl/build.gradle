@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,17 +42,33 @@ kotlin {
         "jvm-lwjgl3Test" {
             dependsOn commonUnmanagedTest
         }
+        nativeMain {
+            dependsOn commonUnmanagedMain
+        }
+        nativeTest {
+            dependsOn commonUnmanagedTest
+        }
+        configure([nativeLinuxX64Main]) {
+            dependsOn nativeMain
+        }
+        configure([nativeLinuxX64Test]) {
+            dependsOn nativeTest
+        }
     }
     targets {
         // Kotlin/JVM (LWJGL 3)
         fromPreset(presets.jvm, "jvm-lwjgl3")
-    }
-}
 
-kotlin {
-    sourceSets.each { sourceSet ->
-        sourceSet.languageSettings {
-            useExperimentalAnnotation "kotlin.ExperimentalUnsignedTypes"
+        // Kotlin/Native
+        fromPreset(presets.linuxX64, "nativeLinuxX64")
+        configure([nativeLinuxX64]) {
+            compilations.main.cinterops {
+                gl {
+                    packageName "platform.OpenGL3"
+                    includeDirs file("ext/egl/api")
+                    includeDirs file("ext/gl/api")
+                }
+            }
         }
     }
 }

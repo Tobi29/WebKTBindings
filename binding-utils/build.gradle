@@ -34,6 +34,24 @@ kotlin {
                 implementation rootProject.kotlinJVM("kotlin-stdlib")
             }
         }
+        nativeMain {
+            dependsOn commonMain
+        }
+        nativeTest {
+            dependsOn commonTest
+        }
+        configure([nativeLinuxX64Main, nativeLinuxArm32HfpMain,
+                nativeLinuxMips32Main, nativeLinuxMipsel32Main,
+                nativeAndroidNativeArm32Main, nativeAndroidNativeArm64Main,
+                nativeWasm32Main]) {
+            dependsOn nativeMain
+        }
+        configure([nativeLinuxX64Test, nativeLinuxArm32HfpTest,
+                nativeLinuxMips32Test, nativeLinuxMipsel32Test,
+                nativeAndroidNativeArm32Test, nativeAndroidNativeArm64Test,
+                nativeWasm32Test]) {
+            dependsOn nativeTest
+        }
     }
     targets {
         // Kotlin/JS
@@ -41,6 +59,15 @@ kotlin {
 
         // Kotlin/JVM
         fromPreset(presets.jvm, "jvm")
+
+        // Kotlin/Native
+        fromPreset(presets.linuxX64, "nativeLinuxX64")
+        fromPreset(presets.linuxArm32Hfp, "nativeLinuxArm32Hfp")
+        fromPreset(presets.linuxMips32, "nativeLinuxMips32")
+        fromPreset(presets.linuxMipsel32, "nativeLinuxMipsel32")
+        fromPreset(presets.androidNativeArm32, "nativeAndroidNativeArm32")
+        fromPreset(presets.androidNativeArm64, "nativeAndroidNativeArm64")
+        fromPreset(presets.wasm32, "nativeWasm32")
     }
 }
 

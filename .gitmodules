@@ -1,3 +1,47 @@
+[submodule "stb-truetype-font/ext/stb"]
+	path = stb-truetype-font/ext/stb
+	url = https://github.com/nothings/stb
+	branch = master
+[submodule "glfw/ext/glfw"]
+	path = glfw/ext/glfw
+	url = https://github.com/glfw/glfw
+	branch = master
 [submodule "al/ext/openal-soft"]
 	path = al/ext/openal-soft
 	url = https://github.com/Tobi29/openal-soft
+[submodule "tinyfd/ext/tinyfd"]
+	path = tinyfd/ext/tinyfd
+	url = https://git.code.sf.net/p/tinyfiledialogs/code
+[submodule "gl/ext/gl"]
+	path = gl/ext/gl
+	url = https://github.com/KhronosGroup/OpenGL-Registry
+[submodule "gl/ext/egl"]
+	path = gl/ext/egl
+	url = https://github.com/KhronosGroup/EGL-Registry
+[submodule "glfw/ext/libxcursor"]
+	path = glfw/ext/libxcursor
+	url = https://gitlab.freedesktop.org/xorg/lib/libxcursor
+[submodule "glfw/ext/xorgproto"]
+	path = glfw/ext/xorgproto
+	url = https://gitlab.freedesktop.org/xorg/proto/xorgproto
+[submodule "glfw/ext/libx11"]
+	path = glfw/ext/libx11
+	url = https://gitlab.freedesktop.org/xorg/lib/libx11
+[submodule "glfw/ext/libxrandr"]
+	path = glfw/ext/libxrandr
+	url = https://gitlab.freedesktop.org/xorg/lib/libxrandr
+[submodule "glfw/ext/libxrender"]
+	path = glfw/ext/libxrender
+	url = https://gitlab.freedesktop.org/xorg/lib/libxrender
+[submodule "glfw/ext/libxinerama"]
+	path = glfw/ext/libxinerama
+	url = https://gitlab.freedesktop.org/xorg/lib/libxinerama
+[submodule "glfw/ext/libxi"]
+	path = glfw/ext/libxi
+	url = https://gitlab.freedesktop.org/xorg/lib/libxi
+[submodule "glfw/ext/libxext"]
+	path = glfw/ext/libxext
+	url = https://gitlab.freedesktop.org/xorg/lib/libxext
+[submodule "glfw/ext/libxfixes"]
+	path = glfw/ext/libxfixes
+	url = https://gitlab.freedesktop.org/xorg/lib/libxfixes

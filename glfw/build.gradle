@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,15 @@
 apply plugin: "kotlin-multiplatform"
 apply from: rootProject.file("gradle/publish-maven.gradle")
 
+task prepareDependencies(type: Copy) {
+    into("X11/Xcursor") {
+        from(file("ext/libxcursor/include/X11/Xcursor/Xcursor.h.in")) {
+            rename { "Xcursor.h" }
+        }
+    }
+    destinationDir = temporaryDir
+}
+
 kotlin {
     sourceSets {
         commonMain {
@@ -30,12 +39,52 @@ kotlin {
                 implementation rootProject.kotlinJVM("kotlin-stdlib")
                 implementation rootProject.lwjglJVM("lwjgl")
                 implementation rootProject.lwjglJVM("lwjgl-glfw")
-                implementation rootProject.lwjglJVM("lwjgl-tinyfd")
             }
+        }
+        nativeMain {
+            dependsOn commonMain
+        }
+        nativeTest {
+            dependsOn commonTest
+        }
+        configure([nativeLinuxX64Main]) {
+            dependsOn nativeMain
+        }
+        configure([nativeLinuxX64Test]) {
+            dependsOn nativeTest
         }
     }
     targets {
         // Kotlin/JVM (LWJGL 3)
         fromPreset(presets.jvm, "jvm-lwjgl3")
+
+        // Kotlin/Native
+        fromPreset(presets.linuxX64, "nativeLinuxX64")
+        configure([nativeLinuxX64]) {
+            compilations.main.cinterops {
+                glfw {
+                    packageName "binding.glfw"
+                    includeDirs file("ext")
+                    includeDirs file("ext/glfw/include")
+                    includeDirs file("ext/libx11/include")
+                    includeDirs file("ext/libxcursor/include")
+                    includeDirs file("ext/libxext/include")
+                    includeDirs file("ext/libxfixes/include")
+                    includeDirs file("ext/libxi/include")
+                    includeDirs file("ext/libxinerama/include")
+                    includeDirs file("ext/libxrandr/include")
+                    includeDirs file("ext/libxrender/include")
+                    includeDirs file("ext/xorgproto/include")
+                    includeDirs project(":gl").file("ext/egl/api")
+                    includeDirs project(":gl").file("ext/gl/api")
+                    includeDirs projectDir
+                    includeDirs tasks.prepareDependencies.temporaryDir
+                }
+            }
+
+            tasks.getByName(compilations.main.cinterops.glfw
+                    .interopProcessingTaskName)
+                    .dependsOn(tasks.prepareDependencies)
+        }
     }
 }

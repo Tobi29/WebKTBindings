@@ -1,0 +1,11 @@
+compilerOpts = -std=c11
+
+headers = AL/al.h AL/alc.h
+headerFilter = AL/**
+
+linkerOpts.linux = -lopenal
+
+---
+#define AL_ALEXT_PROTOTYPES
+
+#include <AL/alext.h>

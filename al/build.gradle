@@ -69,6 +69,20 @@ kotlin {
                 implementation rootProject.kotlinJVM("kotlin-stdlib")
             }
         }
+        nativeMain {
+            dependsOn commonMain
+        }
+        nativeTest {
+            dependsOn commonTest
+        }
+        configure([nativeLinuxX64Main, nativeLinuxArm32HfpMain,
+                nativeLinuxMips32Main, nativeLinuxMipsel32Main]) {
+            dependsOn nativeMain
+        }
+        configure([nativeLinuxX64Test, nativeLinuxArm32HfpTest,
+                nativeLinuxMips32Test, nativeLinuxMipsel32Test]) {
+            dependsOn nativeTest
+        }
     }
     targets {
         // Kotlin/JVM (LWJGL 3)
@@ -76,6 +90,21 @@ kotlin {
 
         // Kotlin/Android
         fromPreset(presets.android, "android")
+
+        // Kotlin/Native
+        fromPreset(presets.linuxX64, "nativeLinuxX64")
+        fromPreset(presets.linuxArm32Hfp, "nativeLinuxArm32Hfp")
+        fromPreset(presets.linuxMips32, "nativeLinuxMips32")
+        fromPreset(presets.linuxMipsel32, "nativeLinuxMipsel32")
+        configure([nativeLinuxX64, nativeLinuxArm32Hfp,
+                nativeLinuxMips32, nativeLinuxMipsel32]) {
+            compilations.main.cinterops {
+                al {
+                    packageName "binding.al"
+                    includeDirs file("ext/openal-soft/include")
+                }
+            }
+        }
     }
     android {
         publishLibraryVariants("release", "debug")

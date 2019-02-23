@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,9 +32,47 @@ kotlin {
                 implementation rootProject.lwjglJVM("lwjgl-stb")
             }
         }
+        nativeMain {
+            dependsOn commonMain
+        }
+        nativeTest {
+            dependsOn commonTest
+        }
+        configure([nativeLinuxX64Main, nativeLinuxArm32HfpMain,
+                nativeLinuxMips32Main, nativeLinuxMipsel32Main,
+                nativeAndroidNativeArm32Main, nativeAndroidNativeArm64Main,
+                nativeWasm32Main]) {
+            dependsOn nativeMain
+        }
+        configure([nativeLinuxX64Test, nativeLinuxArm32HfpTest,
+                nativeLinuxMips32Test, nativeLinuxMipsel32Test,
+                nativeAndroidNativeArm32Test, nativeAndroidNativeArm64Test,
+                nativeWasm32Test]) {
+            dependsOn nativeTest
+        }
     }
     targets {
         // Kotlin/JVM (LWJGL 3)
         fromPreset(presets.jvm, "jvm-lwjgl3")
+
+        // Kotlin/Native
+        fromPreset(presets.linuxX64, "nativeLinuxX64")
+        fromPreset(presets.linuxArm32Hfp, "nativeLinuxArm32Hfp")
+        fromPreset(presets.linuxMips32, "nativeLinuxMips32")
+        fromPreset(presets.linuxMipsel32, "nativeLinuxMipsel32")
+        fromPreset(presets.androidNativeArm32, "nativeAndroidNativeArm32")
+        fromPreset(presets.androidNativeArm64, "nativeAndroidNativeArm64")
+        fromPreset(presets.wasm32, "nativeWasm32")
+        configure([nativeLinuxX64, nativeLinuxArm32Hfp,
+                nativeLinuxMips32, nativeLinuxMipsel32,
+                nativeAndroidNativeArm32, nativeAndroidNativeArm64,
+                nativeWasm32]) {
+            compilations.main.cinterops {
+                stbttf {
+                    packageName "binding.stbttf"
+                    includeDirs file("ext/stb")
+                }
+            }
+        }
     }
 }

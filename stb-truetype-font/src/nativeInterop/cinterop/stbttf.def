@@ -1,0 +1,10 @@
+compilerOpts = -std=c11
+
+---
+#define STB_TRUETYPE_IMPLEMENTATION
+#include <stb_truetype.h>
+
+static inline int stbtt_point_size(int font_size) {
+    return STBTT_POINT_SIZE(font_size);
+}
+
