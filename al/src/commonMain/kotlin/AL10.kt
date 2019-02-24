@@ -168,10 +168,10 @@ expect fun AL10.alGetListenerfv(
     param: ALenum, values: FloatArray
 )
 
-expect fun AL10.alGenSources(
+expect fun AL10.alCreateSource(
 ): ALSource
 
-expect fun AL10.alDeleteSources(
+expect fun AL10.alDeleteSource(
     source: ALSource
 )
 
@@ -260,10 +260,10 @@ expect fun AL10.alSourceRewindv(
     sources: Array<ALSource>
 )
 
-expect fun AL10.alGenBuffers(
+expect fun AL10.alCreateBuffer(
 ): ALBuffer
 
-expect fun AL10.alDeleteBuffers(
+expect fun AL10.alDeleteBuffer(
     buffer: ALBuffer
 )
 

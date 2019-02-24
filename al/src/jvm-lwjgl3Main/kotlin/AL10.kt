@@ -284,11 +284,11 @@ actual inline fun AL10.alGetListenerfv(
     param, values
 )
 
-actual inline fun AL10.alGenSources(
+actual inline fun AL10.alCreateSource(
 ) = JAL10.alGenSources(
 )
 
-actual inline fun AL10.alDeleteSources(
+actual inline fun AL10.alDeleteSource(
     source: ALSource
 ) = JAL10.alDeleteSources(
     source
@@ -465,11 +465,11 @@ actual inline fun AL10.alSourceRewindv(
     }
 }
 
-actual inline fun AL10.alGenBuffers(
+actual inline fun AL10.alCreateBuffer(
 ) = JAL10.alGenBuffers(
 )
 
-actual inline fun AL10.alDeleteBuffers(
+actual inline fun AL10.alDeleteBuffer(
     buffer: ALBuffer
 ) = JAL10.alDeleteBuffers(
     buffer

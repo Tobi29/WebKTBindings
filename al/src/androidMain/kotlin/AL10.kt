@@ -276,14 +276,14 @@ actual inline fun AL10.alGetListenerfv(
     param, values
 )
 
-actual inline fun AL10.alGenSources(
+actual inline fun AL10.alCreateSource(
 ) = readInt { buffer ->
     AL.alGenSources(
         1, buffer
     )
 }
 
-actual inline fun AL10.alDeleteSources(
+actual inline fun AL10.alDeleteSource(
     source: ALSource
 ) = AL.alDeleteSources(
     1, intArrayOf(source)
@@ -448,14 +448,14 @@ actual inline fun AL10.alSourceRewindv(
     )
 }
 
-actual inline fun AL10.alGenBuffers(
+actual inline fun AL10.alCreateBuffer(
 ) = readInt { buffer ->
     AL.alGenBuffers(
         1, buffer
     )
 }
 
-actual inline fun AL10.alDeleteBuffers(
+actual inline fun AL10.alDeleteBuffer(
     buffer: ALBuffer
 ) = AL.alDeleteBuffers(
     1, intArrayOf(buffer)

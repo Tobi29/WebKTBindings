@@ -304,7 +304,7 @@ actual inline fun AL10.alGetListenerfv(
     )
 }
 
-actual inline fun AL10.alGenSources(
+actual inline fun AL10.alCreateSource(
 ) = memScoped {
     val buffer = alloc<UIntVar>()
     binding.al.alGenSources(
@@ -313,7 +313,7 @@ actual inline fun AL10.alGenSources(
     buffer.value.toInt()
 }
 
-actual inline fun AL10.alDeleteSources(
+actual inline fun AL10.alDeleteSource(
     source: ALSource
 ) = memScoped {
     val buffer = alloc<UIntVar>()
@@ -501,7 +501,7 @@ actual inline fun AL10.alSourceRewindv(
     }
 }
 
-actual inline fun AL10.alGenBuffers(
+actual inline fun AL10.alCreateBuffer(
 ) = memScoped {
     val buffer = alloc<UIntVar>()
     binding.al.alGenBuffers(
@@ -510,7 +510,7 @@ actual inline fun AL10.alGenBuffers(
     buffer.value.toInt()
 }
 
-actual inline fun AL10.alDeleteBuffers(
+actual inline fun AL10.alDeleteBuffer(
     buffer: ALBuffer
 ) = memScoped {
     val bufferBuffer = alloc<UIntVar>()
