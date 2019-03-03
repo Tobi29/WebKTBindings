@@ -37,7 +37,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation rootProject.kotlin("kotlin-stdlib")
+                implementation kotlin("stdlib-common")
                 api project(":binding-utils")
             }
         }
@@ -49,15 +49,15 @@ kotlin {
         }
         jsMain {
             dependencies {
-                implementation rootProject.kotlinJS("kotlin-stdlib")
+                implementation kotlin("stdlib-js")
             }
         }
         "jvm-lwjgl3Main" {
             dependsOn commonUnmanagedMain
             dependencies {
-                implementation rootProject.kotlinJVM("kotlin-stdlib")
-                implementation rootProject.lwjglJVM("lwjgl")
-                implementation rootProject.lwjglJVM("lwjgl-opengles")
+                implementation kotlin("stdlib")
+                implementation rootProject.lwjgl("lwjgl")
+                implementation rootProject.lwjgl("lwjgl-opengles")
             }
         }
         "jvm-lwjgl3Test" {
@@ -66,7 +66,7 @@ kotlin {
         androidMain {
             dependsOn commonUnmanagedMain
             dependencies {
-                implementation rootProject.kotlinJVM("kotlin-stdlib")
+                implementation kotlin("stdlib")
             }
         }
         androidTest {

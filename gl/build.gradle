@@ -21,7 +21,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation rootProject.kotlin("kotlin-stdlib")
+                implementation kotlin("stdlib-common")
                 api project(":binding-utils")
             }
         }
@@ -34,9 +34,9 @@ kotlin {
         "jvm-lwjgl3Main" {
             dependsOn commonUnmanagedMain
             dependencies {
-                implementation rootProject.kotlinJVM("kotlin-stdlib")
-                implementation rootProject.lwjglJVM("lwjgl")
-                implementation rootProject.lwjglJVM("lwjgl-opengl")
+                implementation kotlin("stdlib")
+                implementation rootProject.lwjgl("lwjgl")
+                implementation rootProject.lwjgl("lwjgl-opengl")
             }
         }
         "jvm-lwjgl3Test" {

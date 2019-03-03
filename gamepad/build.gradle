@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,12 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation rootProject.kotlin("kotlin-stdlib")
+                implementation kotlin("stdlib-common")
             }
         }
         jsMain {
             dependencies {
-                implementation rootProject.kotlinJS("kotlin-stdlib")
+                implementation kotlin("stdlib-js")
             }
         }
     }

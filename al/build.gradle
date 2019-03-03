@@ -53,20 +53,20 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation rootProject.kotlin("kotlin-stdlib")
+                implementation kotlin("stdlib-common")
                 api project(":binding-utils")
             }
         }
         "jvm-lwjgl3Main" {
             dependencies {
-                implementation rootProject.kotlinJVM("kotlin-stdlib")
-                implementation rootProject.lwjglJVM("lwjgl")
-                implementation rootProject.lwjglJVM("lwjgl-openal")
+                implementation kotlin("stdlib")
+                implementation rootProject.lwjgl("lwjgl")
+                implementation rootProject.lwjgl("lwjgl-openal")
             }
         }
         androidMain {
             dependencies {
-                implementation rootProject.kotlinJVM("kotlin-stdlib")
+                implementation kotlin("stdlib")
             }
         }
         nativeMain {
