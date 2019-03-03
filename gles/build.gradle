@@ -57,6 +57,7 @@ kotlin {
             dependencies {
                 implementation kotlin("stdlib")
                 implementation rootProject.lwjgl("lwjgl")
+                implementation rootProject.lwjgl("lwjgl-egl")
                 implementation rootProject.lwjgl("lwjgl-opengles")
             }
         }
