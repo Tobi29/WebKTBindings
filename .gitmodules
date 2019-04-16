@@ -1,11 +1,9 @@
 [submodule "stb-truetype-font/ext/stb"]
 	path = stb-truetype-font/ext/stb
 	url = https://github.com/nothings/stb
-	branch = master
 [submodule "glfw/ext/glfw"]
 	path = glfw/ext/glfw
 	url = https://github.com/glfw/glfw
-	branch = master
 [submodule "al/ext/openal-soft"]
 	path = al/ext/openal-soft
 	url = https://github.com/Tobi29/openal-soft
