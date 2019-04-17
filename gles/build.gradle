@@ -14,24 +14,11 @@
  * limitations under the License.
  */
 
-apply plugin: "com.android.library"
+if (rootProject.enableAndroid) {
+    apply plugin: "com.android.library"
+}
 apply plugin: "kotlin-multiplatform"
 apply from: rootProject.file("gradle/publish-maven.gradle")
-
-android {
-    compileSdkVersion = 28
-
-    defaultConfig {
-        targetSdkVersion 28
-        minSdkVersion 18
-        versionCode = 1
-        versionName = version
-    }
-
-    sourceSets {
-        main.java.srcDirs += "src/androidMain/kotlin"
-    }
-}
 
 kotlin {
     sourceSets {
@@ -64,15 +51,6 @@ kotlin {
         "jvm-lwjgl3Test" {
             dependsOn commonUnmanagedTest
         }
-        androidMain {
-            dependsOn commonUnmanagedMain
-            dependencies {
-                implementation kotlin("stdlib")
-            }
-        }
-        androidTest {
-            dependsOn commonUnmanagedTest
-        }
     }
     targets {
         // Kotlin/JS
@@ -80,11 +58,43 @@ kotlin {
 
         // Kotlin/JVM (LWJGL 3)
         fromPreset(presets.jvm, "jvm-lwjgl3")
-
-        // Kotlin/Android
-        fromPreset(presets.android, "android")
     }
+}
+
+if (rootProject.enableAndroid) {
     android {
-        publishLibraryVariants("release", "debug")
+        compileSdkVersion = 28
+
+        defaultConfig {
+            targetSdkVersion 28
+            minSdkVersion 18
+            versionCode = 1
+            versionName = version
+        }
+
+        sourceSets {
+            main.java.srcDirs += "src/androidMain/kotlin"
+        }
+    }
+
+    kotlin {
+        sourceSets {
+            androidMain {
+                dependsOn commonUnmanagedMain
+                dependencies {
+                    implementation kotlin("stdlib")
+                }
+            }
+            androidTest {
+                dependsOn commonUnmanagedTest
+            }
+        }
+        targets {
+            // Kotlin/Android
+            fromPreset(presets.android, "android")
+        }
+        android {
+            publishLibraryVariants("release", "debug")
+        }
     }
 }

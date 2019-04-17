@@ -63,7 +63,15 @@ allprojects {
     }
 }
 
+Set<Object> propertyFalseValues = ["false", "0"]
+
+def booleanPropertyDefaultTrue = {
+    name -> !(project.findProperty(name) in propertyFalseValues)
+}
+
 ext {
+    enableAndroid = booleanPropertyDefaultTrue("enableAndroid")
+
     lwjglVersion = "3.2.1"
     lwjgl = { module -> "org.lwjgl:$module:$lwjglVersion" }
 }

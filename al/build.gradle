@@ -14,40 +14,11 @@
  * limitations under the License.
  */
 
-apply plugin: "com.android.library"
+if (rootProject.enableAndroid) {
+    apply plugin: "com.android.library"
+}
 apply plugin: "kotlin-multiplatform"
 apply from: rootProject.file("gradle/publish-maven.gradle")
-
-android {
-    compileSdkVersion = 28
-
-    defaultConfig {
-        targetSdkVersion 28
-        minSdkVersion 18
-        versionCode = 1
-        versionName = version
-
-        externalNativeBuild {
-            cmake {
-                arguments "-DALSOFT_ENABLE_JNI=ON",
-                        "-DALSOFT_UTILS=OFF",
-                        "-DALSOFT_EXAMPLES=OFF",
-                        "-DALSOFT_TESTS=OFF",
-                        "-DALSOFT_INSTALL=OFF"
-            }
-        }
-    }
-
-    sourceSets {
-        main.java.srcDirs += "src/androidMain/kotlin"
-    }
-
-    externalNativeBuild {
-        cmake {
-            path "ext/openal-soft/CMakeLists.txt"
-        }
-    }
-}
 
 kotlin {
     sourceSets {
@@ -62,11 +33,6 @@ kotlin {
                 implementation kotlin("stdlib")
                 implementation rootProject.lwjgl("lwjgl")
                 implementation rootProject.lwjgl("lwjgl-openal")
-            }
-        }
-        androidMain {
-            dependencies {
-                implementation kotlin("stdlib")
             }
         }
         nativeMain {
@@ -88,9 +54,6 @@ kotlin {
         // Kotlin/JVM (LWJGL 3)
         fromPreset(presets.jvm, "jvm-lwjgl3")
 
-        // Kotlin/Android
-        fromPreset(presets.android, "android")
-
         // Kotlin/Native
         fromPreset(presets.linuxX64, "nativeLinuxX64")
         fromPreset(presets.linuxArm32Hfp, "nativeLinuxArm32Hfp")
@@ -106,7 +69,54 @@ kotlin {
             }
         }
     }
+}
+
+if (rootProject.enableAndroid) {
     android {
-        publishLibraryVariants("release", "debug")
+        compileSdkVersion = 28
+
+        defaultConfig {
+            targetSdkVersion 28
+            minSdkVersion 18
+            versionCode = 1
+            versionName = version
+
+            externalNativeBuild {
+                cmake {
+                    arguments "-DALSOFT_ENABLE_JNI=ON",
+                            "-DALSOFT_UTILS=OFF",
+                            "-DALSOFT_EXAMPLES=OFF",
+                            "-DALSOFT_TESTS=OFF",
+                            "-DALSOFT_INSTALL=OFF"
+                }
+            }
+        }
+
+        sourceSets {
+            main.java.srcDirs += "src/androidMain/kotlin"
+        }
+
+        externalNativeBuild {
+            cmake {
+                path "ext/openal-soft/CMakeLists.txt"
+            }
+        }
+    }
+
+    kotlin {
+        sourceSets {
+            androidMain {
+                dependencies {
+                    implementation kotlin("stdlib")
+                }
+            }
+        }
+        targets {
+            // Kotlin/Android
+            fromPreset(presets.android, "android")
+        }
+        android {
+            publishLibraryVariants("release", "debug")
+        }
     }
 }
