@@ -247,6 +247,7 @@ actual inline val GLFW_MAXIMIZED get() = binding.glfw.GLFW_MAXIMIZED
 actual inline val GLFW_CENTER_CURSOR get() = binding.glfw.GLFW_CENTER_CURSOR
 actual inline val GLFW_TRANSPARENT_FRAMEBUFFER get() = binding.glfw.GLFW_TRANSPARENT_FRAMEBUFFER
 actual inline val GLFW_HOVERED get() = binding.glfw.GLFW_HOVERED
+actual inline val GLFW_FOCUS_ON_SHOW get() = binding.glfw.GLFW_FOCUS_ON_SHOW
 actual inline val GLFW_CURSOR get() = binding.glfw.GLFW_CURSOR
 actual inline val GLFW_STICKY_KEYS get() = binding.glfw.GLFW_STICKY_KEYS
 actual inline val GLFW_STICKY_MOUSE_BUTTONS get() = binding.glfw.GLFW_STICKY_MOUSE_BUTTONS
@@ -293,6 +294,7 @@ actual inline val GLFW_OPENGL_PROFILE get() = binding.glfw.GLFW_OPENGL_PROFILE
 actual inline val GLFW_CONTEXT_RELEASE_BEHAVIOR get() = binding.glfw.GLFW_CONTEXT_RELEASE_BEHAVIOR
 actual inline val GLFW_CONTEXT_NO_ERROR get() = binding.glfw.GLFW_CONTEXT_NO_ERROR
 actual inline val GLFW_CONTEXT_CREATION_API get() = binding.glfw.GLFW_CONTEXT_CREATION_API
+actual inline val GLFW_SCALE_TO_MONITOR get() = binding.glfw.GLFW_SCALE_TO_MONITOR
 actual inline val GLFW_COCOA_RETINA_FRAMEBUFFER get() = binding.glfw.GLFW_COCOA_RETINA_FRAMEBUFFER
 actual inline val GLFW_COCOA_FRAME_NAME get() = binding.glfw.GLFW_COCOA_FRAME_NAME
 actual inline val GLFW_COCOA_GRAPHICS_SWITCHING get() = binding.glfw.GLFW_COCOA_GRAPHICS_SWITCHING
@@ -496,6 +498,12 @@ actual inline fun glfwWindowShouldClose(
 ) = binding.glfw.glfwWindowShouldClose(
     window.ptr
 ) != 0
+
+actual inline fun glfwSetWindowShouldClose(
+    window: GLFWWindow, value: Boolean
+) = binding.glfw.glfwSetWindowShouldClose(
+    window.ptr, value.toByte().toInt()
+)
 
 actual inline fun glfwSetWindowTitle(
     window: GLFWWindow, title: String

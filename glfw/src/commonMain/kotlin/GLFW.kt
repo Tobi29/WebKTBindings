@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Tobi29
+ * Copyright 2012-2019 Tobi29
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -242,6 +242,7 @@ expect val GLFW_MAXIMIZED: Int
 expect val GLFW_CENTER_CURSOR: Int
 expect val GLFW_TRANSPARENT_FRAMEBUFFER: Int
 expect val GLFW_HOVERED: Int
+expect val GLFW_FOCUS_ON_SHOW: Int
 expect val GLFW_CURSOR: Int
 expect val GLFW_STICKY_KEYS: Int
 expect val GLFW_STICKY_MOUSE_BUTTONS: Int
@@ -288,6 +289,7 @@ expect val GLFW_OPENGL_PROFILE: Int
 expect val GLFW_CONTEXT_RELEASE_BEHAVIOR: Int
 expect val GLFW_CONTEXT_NO_ERROR: Int
 expect val GLFW_CONTEXT_CREATION_API: Int
+expect val GLFW_SCALE_TO_MONITOR: Int
 expect val GLFW_COCOA_RETINA_FRAMEBUFFER: Int
 expect val GLFW_COCOA_FRAME_NAME: Int
 expect val GLFW_COCOA_GRAPHICS_SWITCHING: Int
@@ -410,6 +412,10 @@ expect fun glfwDestroyWindow(
 expect fun glfwWindowShouldClose(
     window: GLFWWindow
 ): Boolean
+
+expect fun glfwSetWindowShouldClose(
+    window: GLFWWindow, value: Boolean
+)
 
 expect fun glfwSetWindowTitle(
     window: GLFWWindow, title: String

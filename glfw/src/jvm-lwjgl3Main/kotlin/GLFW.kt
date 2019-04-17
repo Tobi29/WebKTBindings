@@ -247,6 +247,7 @@ actual inline val GLFW_MAXIMIZED get() = GLFW.GLFW_MAXIMIZED
 actual inline val GLFW_CENTER_CURSOR get() = GLFW.GLFW_CENTER_CURSOR
 actual inline val GLFW_TRANSPARENT_FRAMEBUFFER get() = GLFW.GLFW_TRANSPARENT_FRAMEBUFFER
 actual inline val GLFW_HOVERED get() = GLFW.GLFW_HOVERED
+actual inline val GLFW_FOCUS_ON_SHOW get() = GLFW.GLFW_FOCUS_ON_SHOW
 actual inline val GLFW_CURSOR get() = GLFW.GLFW_CURSOR
 actual inline val GLFW_STICKY_KEYS get() = GLFW.GLFW_STICKY_KEYS
 actual inline val GLFW_STICKY_MOUSE_BUTTONS get() = GLFW.GLFW_STICKY_MOUSE_BUTTONS
@@ -293,6 +294,7 @@ actual inline val GLFW_OPENGL_PROFILE get() = GLFW.GLFW_OPENGL_PROFILE
 actual inline val GLFW_CONTEXT_RELEASE_BEHAVIOR get() = GLFW.GLFW_CONTEXT_RELEASE_BEHAVIOR
 actual inline val GLFW_CONTEXT_NO_ERROR get() = GLFW.GLFW_CONTEXT_NO_ERROR
 actual inline val GLFW_CONTEXT_CREATION_API get() = GLFW.GLFW_CONTEXT_CREATION_API
+actual inline val GLFW_SCALE_TO_MONITOR get() = GLFW.GLFW_SCALE_TO_MONITOR
 actual inline val GLFW_COCOA_RETINA_FRAMEBUFFER get() = GLFW.GLFW_COCOA_RETINA_FRAMEBUFFER
 actual inline val GLFW_COCOA_FRAME_NAME get() = GLFW.GLFW_COCOA_FRAME_NAME
 actual inline val GLFW_COCOA_GRAPHICS_SWITCHING get() = GLFW.GLFW_COCOA_GRAPHICS_SWITCHING
@@ -474,6 +476,12 @@ actual inline fun glfwWindowShouldClose(
     window: GLFWWindow
 ) = GLFW.glfwWindowShouldClose(
     window
+)
+
+actual inline fun glfwSetWindowShouldClose(
+    window: GLFWWindow, value: Boolean
+) = GLFW.glfwSetWindowShouldClose(
+    window, value
 )
 
 actual inline fun glfwSetWindowTitle(
