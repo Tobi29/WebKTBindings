@@ -18,6 +18,7 @@
 
 package net.gitout.ktbindings.gles
 
+import android.annotation.SuppressLint
 import net.gitout.ktbindings.utils.DataBuffer
 import net.gitout.ktbindings.utils.read
 import net.gitout.ktbindings.utils.readOrNull
@@ -815,6 +816,7 @@ actual inline fun GLES30.glDrawRangeElements(
     offset.toInt()
 )
 
+@SuppressLint("NewApi") // No really good way of "fixing" this
 actual inline fun GLES30.glReadPixels(
     x: GLint, y: GLint, width: GLsizei, height: GLsizei, format: GLenum,
     type: GLenum, offset: GLintptr
