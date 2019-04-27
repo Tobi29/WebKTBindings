@@ -72,6 +72,9 @@ def booleanPropertyDefaultTrue = {
 ext {
     enableAndroid = booleanPropertyDefaultTrue("enableAndroid")
 
+    androidSdkVersion = 28
+    androidVersionCode = 1
+    
     lwjglVersion = "3.2.1"
     lwjgl = { module -> "org.lwjgl:$module:$lwjglVersion" }
 }

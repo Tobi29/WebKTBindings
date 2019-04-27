@@ -19,6 +19,7 @@ if (rootProject.enableAndroid) {
 }
 apply plugin: "kotlin-multiplatform"
 apply from: rootProject.file("gradle/publish-maven.gradle")
+apply from: rootProject.file("gradle/build-android.gradle")
 
 kotlin {
     sourceSets {
@@ -73,13 +74,8 @@ kotlin {
 
 if (rootProject.enableAndroid) {
     android {
-        compileSdkVersion = 28
-
         defaultConfig {
-            targetSdkVersion 28
             minSdkVersion 18
-            versionCode = 1
-            versionName = version
 
             externalNativeBuild {
                 cmake {
@@ -90,10 +86,6 @@ if (rootProject.enableAndroid) {
                             "-DALSOFT_INSTALL=OFF"
                 }
             }
-        }
-
-        sourceSets {
-            main.java.srcDirs += "src/androidMain/kotlin"
         }
 
         externalNativeBuild {
